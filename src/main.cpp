@@ -1,5 +1,26 @@
 #include <iostream>
+#include <memory>
+
+#include "Profile.hpp"
+#include "view/IFrontend.hpp"
+#include "view/not_cursor/NotCursorFrontend.hpp"
 
 int main(int argc, char *argv[]) {
-    printf("Hello World");
+    const auto profile = std::make_shared<Profile>("Oschdi");
+    const auto task1 = std::make_shared<Task>("Stretching", 5);
+    profile->addDoneTaskToday(task1);
+    //profile->printDoneTasks();
+
+    /*// Print table rows
+    for (const auto& p : tasks) {
+        ncplane_printf(std_plane, "%-15s %3f\n", p.getName().c_str(), p.getScore());
+    }
+    notcurses_render(nc);*/
+
+    FrontendHandle frontend = std::make_shared<NotCursorFrontend>();
+    frontend->init();
+    frontend->render();
+    frontend->stop();
+
+    return 0;
 }

@@ -15,17 +15,22 @@
       };
     in pkgs.mkShell {
       packages = with pkgs; [
-        meson
-        cmake
-        ninja
-        python3
+
       ];
 
       buildInputs = with pkgs; [
+        meson
+        pkg-config
+        gcc
+        cmake
+        ninja
+        python3
         yaml-cpp
+        notcurses
       ];
 
       shellHook = ''
+        export PKG_CONFIG_PATH=${pkgs.notcurses}/lib/pkgconfig:$PKG_CONFIG_PATH
         echo "Entered dev env"
       '';
     };
