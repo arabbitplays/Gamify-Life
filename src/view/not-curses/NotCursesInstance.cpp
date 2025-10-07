@@ -2,11 +2,11 @@
 // Created by oschdi on 06.10.25.
 //
 
-#include "../../../include/view/not_cursor/NotCursorInstance.hpp"
+#include "../../../include/view/not_curses/NotCursesInstance.hpp"
 
 #include <stdexcept>
 
-NotCursorInstance::NotCursorInstance() {
+NotCursesInstance::NotCursesInstance() {
     if(!setlocale(LC_ALL, "")){
         throw std::runtime_error("Setting locale failed!");
     }
@@ -18,15 +18,15 @@ NotCursorInstance::NotCursorInstance() {
     }
 }
 
-void NotCursorInstance::render() {
+void NotCursesInstance::render() {
     notcurses_render(handle);
 }
 
-std::shared_ptr<NotCursorPlane> NotCursorInstance::getStdPlane() {
+std::shared_ptr<NotCursesPlane> NotCursesInstance::getStdPlane() {
     ncplane* std_plane = notcurses_stdplane(handle);
-    return std::make_shared<NotCursorPlane>(std_plane);
+    return std::make_shared<NotCursesPlane>(std_plane);
 }
 
-void NotCursorInstance::destroy() {
+void NotCursesInstance::destroy() {
     notcurses_stop(handle);
 }

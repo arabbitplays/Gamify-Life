@@ -3,7 +3,7 @@
 
 #include "Profile.hpp"
 #include "view/IFrontend.hpp"
-#include "view/not_cursor/NotCursorFrontend.hpp"
+#include "view/not_curses/NotCursesFrontend.hpp"
 
 int main(int argc, char *argv[]) {
     const auto profile = std::make_shared<Profile>("Oschdi");
@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
     }
     notcurses_render(nc);*/
 
-    FrontendHandle frontend = std::make_shared<NotCursorFrontend>();
+    FrontendHandle frontend = std::make_shared<NotCursesFrontend>();
     frontend->init();
-    frontend->render();
+    frontend->run();
     frontend->stop();
 
     return 0;

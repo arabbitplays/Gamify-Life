@@ -10,12 +10,13 @@ incdirs = [
     include_directories('include'),
     include_directories('include/model'),
     include_directories('include/view'),
-    include_directories('include/view/not_cursor'),
+    include_directories('include/view/not_curses'),
     include_directories('include/persistence'),
 ]
 
 yaml = dependency('yaml-cpp')
 curses = dependency('notcurses', required: true)
+glm = dependency('glm', fallback : ['glm', 'glm_dep'], version: ['>=0.9.9.8'])
 
 project_root = meson.current_source_dir()
 
@@ -30,7 +31,8 @@ exe = executable(
     sources: src,
     dependencies: [
         yaml,
-        curses
+        curses,
+        glm,
     ],
     include_directories: incdirs,
     install : true,

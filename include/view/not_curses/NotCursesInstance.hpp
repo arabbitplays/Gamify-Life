@@ -8,14 +8,14 @@
 #include <memory>
 #include <notcurses/notcurses.h>
 
-#include "NotCursorPlane.hpp"
+#include "NotCursesPlane.hpp"
 
-class NotCursorInstance {
+class NotCursesInstance {
 public:
-    NotCursorInstance();
+    NotCursesInstance();
 
     void render();
-    std::shared_ptr<NotCursorPlane> getStdPlane();
+    std::shared_ptr<NotCursesPlane> getStdPlane();
     void destroy();
 
     notcurses* getHandle() { return handle; }

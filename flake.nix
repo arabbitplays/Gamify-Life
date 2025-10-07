@@ -27,6 +27,7 @@
         python3
         yaml-cpp
         notcurses
+        glm
       ];
 
       shellHook = ''
