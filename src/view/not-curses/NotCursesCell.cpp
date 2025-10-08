@@ -16,6 +16,17 @@ void NotCursesCell::setBackgroundColor(uint32_t color_index) {
     nccell_set_bg_palindex(handle.get(), color_index);
 }
 
-nccell * NotCursesCell::getNcHandle() {
+void NotCursesCell::addStyles(const int32_t style_bits) const {
+    if (style_bits & BOLD)
+        nccell_on_styles(handle.get(), NCSTYLE_BOLD);
+    if (style_bits & ITALIC)
+        nccell_on_styles(handle.get(), NCSTYLE_ITALIC);
+    if (style_bits & STRUCK)
+        nccell_on_styles(handle.get(), NCSTYLE_STRUCK);
+    if (style_bits & UNDERLINE)
+        nccell_on_styles(handle.get(), NCSTYLE_UNDERLINE);
+}
+
+nccell * NotCursesCell::getNcHandle() const {
     return handle.get();
 }

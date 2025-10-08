@@ -26,17 +26,20 @@ public:
 
     virtual void draw() const;
 
-    WindowAlignment getAlignment() const;
+    [[nodiscard]] WindowAlignment getAlignment() const;
     void move(glm::ivec2 pos) const;
     void resize(glm::ivec2 new_size) const;
 
     void hide();
     void show();
 
-    glm::ivec2 getMinExtent() const;
+    [[nodiscard]] glm::ivec2 getMinExtent() const;
+    [[nodiscard]] bool isHidden() const;
 
 protected:
     static PlaneHandle createPlane(const PlaneHandle & parent_plane, const glm::ivec2 extent);
+
+    static constexpr uint32_t LEFT_MARGIN = 2;
 
     PlaneHandle parent_plane;
     PlaneHandle plane;

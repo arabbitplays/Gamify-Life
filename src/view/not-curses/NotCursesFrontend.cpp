@@ -26,6 +26,8 @@ void NotCursesFrontend::run() {
     while (!stopped) {
         window_manager->updateWindows(main_plane->getExtent());
         for (const auto& window : windows) {
+            if (window->isHidden())
+                continue;
             window->draw();
         }
 

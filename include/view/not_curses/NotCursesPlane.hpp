@@ -35,10 +35,9 @@ public:
         drawHorizontalLine(cell1, 10);
         drawVerticalLine(cell1, 10);
 
-        cell1->pos = glm::ivec2(15, 15);
-        drawBox(cell1, glm::ivec2(2, 2));
+        drawBox(glm::ivec2(15, 15), glm::ivec2(2, 2));
 
-        drawPerimeter(cell1);
+        drawPerimeter();
 
         ncplane_set_fg_default(handle);
     }
@@ -51,16 +50,18 @@ public:
     void setForegroundColor(uint32_t color_index) const;
     void setBackgroundColor(uint32_t color_index) const;
     void drawCell(const CellHandle& cell) const;
-    void writeText(glm::ivec2 pos, const std::string &text) const;
+    void writeText(glm::ivec2 pos, const std::string &text, int32_t color = DEFAULT, int32_t style_bits = NONE) const;
     void drawHorizontalLine(const CellHandle& cell, uint32_t length) const;
     void drawVerticalLine(const CellHandle& cell, uint32_t length) const;
-    void drawBox(const CellHandle& cell, glm::ivec2 extent) const;
-    void drawPerimeter(const CellHandle &cell) const;
+    void drawBox(glm::ivec2 pos, glm::ivec2 extent, int32_t color = DEFAULT, int32_t style_bits = NONE) const;
+    void drawPerimeter(int32_t color = DEFAULT, int32_t style_bits = NONE) const;
 
     ncplane* getNcHandle() { return handle; }
     glm::ivec2 getExtent() const;
 private:
     void setCursorPos(glm::ivec2 pos) const;
+    void addStyles(int32_t style_bits) const;
+    void removeAllStyles() const;
 
     void loadCell(const CellHandle &cell) const;
 

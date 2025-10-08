@@ -4,6 +4,13 @@
 
 #include "../../../include/view/not_curses/NotCursesPlane.hpp"
 
+#include "BorderWindow.hpp"
+#include "BorderWindow.hpp"
+#include "BorderWindow.hpp"
+#include "BorderWindow.hpp"
+#include "BorderWindow.hpp"
+#include "BorderWindow.hpp"
+
 constexpr uint32_t BOX_FLAGS_NO_SIDES = NCBOXMASK_TOP | NCBOXMASK_RIGHT | NCBOXMASK_BOTTOM | NCBOXMASK_LEFT;
 
 NotCursesPlane::NotCursesPlane(ncplane *handle) : handle(handle) {
@@ -16,6 +23,7 @@ NotCursesPlane::NotCursesPlane(const PlaneHandle& parent_plane, glm::ivec2 exten
     };
 
     handle = ncplane_create(parent_plane->getNcHandle(), &opts);
+    setForegroundColor(DEFAULT);
 }
 
 void NotCursesPlane::move(const glm::ivec2 pos) const {
@@ -52,9 +60,13 @@ void NotCursesPlane::drawCell(const CellHandle &cell) const {
     ncplane_putc_yx(handle, cell->pos.y, cell->pos.x, cell->getNcHandle());
 }
 
-void NotCursesPlane::writeText(const glm::ivec2 pos, const std::string &text) const {
+void NotCursesPlane::writeText(const glm::ivec2 pos, const std::string &text, int32_t color, int32_t style_bits) const {
     setCursorPos(pos);
+    addStyles(style_bits);
+    setForegroundColor(color);
     ncplane_putstr(handle, text.c_str());
+    removeAllStyles();
+    setForegroundColor(DEFAULT);
 }
 
 void NotCursesPlane::drawHorizontalLine(const CellHandle &cell, uint32_t length) const {
@@ -69,15 +81,17 @@ void NotCursesPlane::drawVerticalLine(const CellHandle &cell, uint32_t length) c
     ncplane_vline(handle, cell->getNcHandle(), length);
 }
 
-void NotCursesPlane::drawBox(const CellHandle &cell, glm::ivec2 extent) const {
-    setCursorPos(cell->pos);
+void NotCursesPlane::drawBox(const glm::ivec2 pos, const glm::ivec2 extent, const int32_t color, const int32_t style_bits) const {
+    CellHandle cell = std::make_shared<NotCursesCell>();
+    cell->setForegroundColor(color);
+    cell->addStyles(style_bits);
+    setCursorPos(pos);
     ncplane_rounded_box(handle, cell->getNcHandle()->stylemask, cell->getNcHandle()->channels, cell->pos.y + extent.y - 1, cell->pos.x + extent.x - 1, 0);
 }
 
-void NotCursesPlane::drawPerimeter(const CellHandle &cell) const {
-    setCursorPos(glm::ivec2(0));
+void NotCursesPlane::drawPerimeter(const int32_t color, const int32_t style_bits) const {
     glm::ivec2 extent = getExtent();
-    ncplane_rounded_box(handle, cell->getNcHandle()->stylemask, cell->getNcHandle()->channels, extent.y - 1, extent.x - 1, 0);
+    drawBox(glm::ivec2(0), glm::ivec2(extent.x - 1, extent.y - 1), color, style_bits);
 }
 
 glm::ivec2 NotCursesPlane::getExtent() const {
@@ -88,6 +102,21 @@ glm::ivec2 NotCursesPlane::getExtent() const {
 
 void NotCursesPlane::setCursorPos(glm::ivec2 pos) const {
     ncplane_cursor_move_yx(handle, pos.y, pos.x);
+}
+
+void NotCursesPlane::addStyles(const int32_t style_bits) const {
+    if (style_bits & BOLD)
+        ncplane_on_styles(handle, NCSTYLE_BOLD);
+    if (style_bits & ITALIC)
+        ncplane_on_styles(handle, NCSTYLE_ITALIC);
+    if (style_bits & STRUCK)
+        ncplane_on_styles(handle, NCSTYLE_STRUCK);
+    if (style_bits & UNDERLINE)
+        ncplane_on_styles(handle, NCSTYLE_UNDERLINE);
+}
+
+void NotCursesPlane::removeAllStyles() const {
+    ncplane_off_styles(handle, NCSTYLE_MASK);
 }
 
 void NotCursesPlane::loadCell(const CellHandle& cell) const {

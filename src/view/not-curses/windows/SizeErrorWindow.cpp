@@ -7,5 +7,5 @@
 void SizeErrorWindow::draw() const {
     plane->erase();
     plane->resize(parent_plane->getExtent());
-    plane->writeText(glm::ivec2(0), "Window too small!");
+    plane->writeText(glm::ivec2(0), "Window too small!", ERROR);
 }

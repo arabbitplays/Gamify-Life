@@ -12,11 +12,9 @@ NotCursesWindow::NotCursesWindow(const PlaneHandle &parent_plane, const glm::ive
 }
 
 void NotCursesWindow::draw() const {
-    if (hidden)
-        return;
     auto cell = std::make_shared<NotCursesCell>();
     plane->erase();
-    plane->drawPerimeter(cell);
+    plane->drawPerimeter();
 }
 
 WindowAlignment NotCursesWindow::getAlignment() const {
@@ -43,6 +41,10 @@ void NotCursesWindow::show() {
 
 glm::ivec2 NotCursesWindow::getMinExtent() const {
     return min_extent;
+}
+
+bool NotCursesWindow::isHidden() const {
+    return hidden;
 }
 
 PlaneHandle NotCursesWindow::createPlane(const PlaneHandle &parent_plane, const glm::ivec2 extent) {
