@@ -15,11 +15,15 @@ public:
     NotCursesInstance();
 
     void render();
-    std::shared_ptr<NotCursesPlane> getStdPlane();
+
+    PlaneHandle createPlane(glm::ivec2 extent);
+    PlaneHandle getStdPlane();
+
     void destroy();
 
     notcurses* getHandle() { return handle; }
 private:
+    ncplane* std_plane_handle;
     notcurses* handle;
 };
 

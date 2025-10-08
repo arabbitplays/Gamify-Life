@@ -16,15 +16,20 @@ NotCursesInstance::NotCursesInstance() {
     if (!handle) {
         throw std::runtime_error("Failed to initialize Notcurses\n");
     }
+
+    std_plane_handle = notcurses_stdplane(handle);
 }
 
 void NotCursesInstance::render() {
     notcurses_render(handle);
 }
 
-std::shared_ptr<NotCursesPlane> NotCursesInstance::getStdPlane() {
-    ncplane* std_plane = notcurses_stdplane(handle);
-    return std::make_shared<NotCursesPlane>(std_plane);
+PlaneHandle NotCursesInstance::createPlane(glm::ivec2 extent) {
+    return std::make_shared<NotCursesPlane>(std_plane_handle, extent);
+}
+
+PlaneHandle NotCursesInstance::getStdPlane() {
+    return std::make_shared<NotCursesPlane>(std_plane_handle);
 }
 
 void NotCursesInstance::destroy() {

@@ -16,10 +16,6 @@ void NotCursesCell::setBackgroundColor(uint32_t color_index) {
     nccell_set_bg_palindex(handle.get(), color_index);
 }
 
-void NotCursesCell::setChar(char c) {
-    handle->gcluster = c;
-}
-
 nccell * NotCursesCell::getNcHandle() {
     return handle.get();
 }

@@ -21,7 +21,7 @@ public:
 
 private:
     std::shared_ptr<NotCursesInstance> instance;
-    std::shared_ptr<NotCursesPlane> main_plane;
+    PlaneHandle main_plane;
 
     bool stopped = false;
 };

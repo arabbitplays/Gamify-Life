@@ -13,11 +13,11 @@ public:
 
     void setForegroundColor(uint32_t color_index);
     void setBackgroundColor(uint32_t color_index);
-    void setChar(char c);
 
     nccell* getNcHandle();
 
     glm::ivec2 pos = glm::ivec2(0);
+    const char * character = "\u0000"; // utf-8 encoded character
 private:
     std::shared_ptr<nccell> handle{};
 };

@@ -8,7 +8,8 @@ void NotCursesFrontend::init() {
     instance = std::make_shared<NotCursesInstance>();
     main_plane = instance->getStdPlane();
 
-    main_plane->test();
+    PlaneHandle test_plane = instance->createPlane(glm::ivec2(300, 300));
+    test_plane->test();
     instance->render();
 }
 
