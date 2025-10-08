@@ -18,8 +18,14 @@ int main(int argc, char *argv[]) {
     notcurses_render(nc);*/
 
     FrontendHandle frontend = std::make_shared<NotCursesFrontend>();
-    frontend->init();
-    frontend->run();
+    try {
+        frontend->init();
+        frontend->run();
+    } catch (const std::exception& e) {
+        fprintf(stderr, "%s", e.what());
+        frontend->stop();
+    }
+
     frontend->stop();
 
     return 0;

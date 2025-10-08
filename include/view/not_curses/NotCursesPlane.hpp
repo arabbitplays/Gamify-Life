@@ -17,12 +17,13 @@ typedef std::shared_ptr<NotCursesPlane> PlaneHandle;
 class NotCursesPlane {
 public:
     explicit NotCursesPlane(ncplane* handle);
-    NotCursesPlane(ncplane* std_plane, glm::ivec2 extent);
+    NotCursesPlane(const PlaneHandle& parent_plane, glm::ivec2 extent);
 
     void test() {
         setForegroundColor(1);
         setBackgroundColor(2);
 
+        setCursorPos(glm::ivec2(1, 1));
         ncplane_putstr(handle, "Moin Moin\n");
 
         CellHandle cell1 = std::make_shared<NotCursesCell>();
@@ -37,23 +38,31 @@ public:
         cell1->pos = glm::ivec2(15, 15);
         drawBox(cell1, glm::ivec2(2, 2));
 
+        drawPerimeter(cell1);
+
         ncplane_set_fg_default(handle);
     }
 
+    void move(glm::ivec2 pos) const;
+    void resize(glm::ivec2 new_size) const;
+    void erase() const;
+    void reparent(const PlaneHandle& new_parent) const;
+
     void setForegroundColor(uint32_t color_index) const;
     void setBackgroundColor(uint32_t color_index) const;
-    void drawCell(const CellHandle& cell);
-    void drawHorizontalLine(const CellHandle& cell, uint32_t length);
-    void drawVerticalLine(const CellHandle& cell, uint32_t length);
-    void drawBox(const CellHandle& cell, glm::ivec2 extent);
-
+    void drawCell(const CellHandle& cell) const;
+    void writeText(glm::ivec2 pos, const std::string &text) const;
+    void drawHorizontalLine(const CellHandle& cell, uint32_t length) const;
+    void drawVerticalLine(const CellHandle& cell, uint32_t length) const;
+    void drawBox(const CellHandle& cell, glm::ivec2 extent) const;
+    void drawPerimeter(const CellHandle &cell) const;
 
     ncplane* getNcHandle() { return handle; }
-
+    glm::ivec2 getExtent() const;
 private:
-    void setCursorPos(glm::ivec2 pos);
+    void setCursorPos(glm::ivec2 pos) const;
 
-    void loadCell(const CellHandle &cell);
+    void loadCell(const CellHandle &cell) const;
 
     ncplane* handle;
 };

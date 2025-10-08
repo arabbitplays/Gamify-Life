@@ -12,7 +12,8 @@ NotCursesInstance::NotCursesInstance() {
     }
 
     notcurses_options opts{};
-    handle = notcurses_init(&opts, nullptr);
+    setenv("NOTCURSES_LOGLEVEL", "trace", 1);
+    handle = notcurses_init(&opts, NULL);
     if (!handle) {
         throw std::runtime_error("Failed to initialize Notcurses\n");
     }
@@ -22,10 +23,6 @@ NotCursesInstance::NotCursesInstance() {
 
 void NotCursesInstance::render() {
     notcurses_render(handle);
-}
-
-PlaneHandle NotCursesInstance::createPlane(glm::ivec2 extent) {
-    return std::make_shared<NotCursesPlane>(std_plane_handle, extent);
 }
 
 PlaneHandle NotCursesInstance::getStdPlane() {

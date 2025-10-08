@@ -11,6 +11,7 @@ incdirs = [
     include_directories('include/model'),
     include_directories('include/view'),
     include_directories('include/view/not_curses'),
+    include_directories('include/view/not_curses/windows'),
     include_directories('include/persistence'),
 ]
 

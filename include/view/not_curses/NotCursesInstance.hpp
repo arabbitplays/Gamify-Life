@@ -16,7 +16,6 @@ public:
 
     void render();
 
-    PlaneHandle createPlane(glm::ivec2 extent);
     PlaneHandle getStdPlane();
 
     void destroy();
