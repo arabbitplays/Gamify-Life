@@ -52,6 +52,7 @@ void WindowManager::updateWindows(const glm::ivec2 screen_extent) const {
             default:
                 new_pos = glm::ivec2(0);
                 new_size = screen_extent;
+                break;
         }
 
         window->move(new_pos);

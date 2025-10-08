@@ -2,24 +2,21 @@
 #include <memory>
 
 #include "Profile.hpp"
+#include "controller/TaskController.hpp"
 #include "view/IFrontend.hpp"
 #include "view/not_curses/NotCursesFrontend.hpp"
 
 int main(int argc, char *argv[]) {
     const auto profile = std::make_shared<Profile>("Oschdi");
-    const auto task1 = std::make_shared<Task>("Stretching", 5);
-    profile->addDoneTaskToday(task1);
-    //profile->printDoneTasks();
+    auto app_controller = std::make_shared<AppController>();
+    app_controller->task_controller = std::make_shared<TaskController>();
 
-    /*// Print table rows
-    for (const auto& p : tasks) {
-        ncplane_printf(std_plane, "%-15s %3f\n", p.getName().c_str(), p.getScore());
-    }
-    notcurses_render(nc);*/
+    std::vector<TaskHandle> tasks = app_controller->task_controller->getAvailableTasks();
+    profile->addDoneTaskToday(tasks.at(0));
 
     FrontendHandle frontend = std::make_shared<NotCursesFrontend>();
     try {
-        frontend->init();
+        frontend->init(app_controller);
         frontend->run();
     } catch (const std::exception& e) {
         fprintf(stderr, "%s", e.what());

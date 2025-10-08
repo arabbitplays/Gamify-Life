@@ -16,7 +16,7 @@ class NotCursesFrontend : public IFrontend {
 public:
     NotCursesFrontend() = default;
 
-    void init() override;
+    void init(const std::shared_ptr<AppController>& app_controller) override;
     void run() override;
 
     void handleInput();

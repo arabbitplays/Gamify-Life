@@ -22,6 +22,7 @@ enum WindowAlignment {
 class NotCursesWindow {
 public:
     NotCursesWindow(const PlaneHandle &parent_plane, glm::ivec2 min_extent, WindowAlignment alignment);
+    virtual ~NotCursesWindow() = default;
 
     virtual void draw() const;
 
