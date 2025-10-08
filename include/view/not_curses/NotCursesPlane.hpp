@@ -34,8 +34,8 @@ public:
         drawHorizontalLine(cell1, 10);
         drawVerticalLine(cell1, 10);
 
-        cell1->pos = glm::ivec2(2, 2);
-        drawBox(cell1, glm::ivec2(20, 20));
+        cell1->pos = glm::ivec2(15, 15);
+        drawBox(cell1, glm::ivec2(2, 2));
 
         ncplane_set_fg_default(handle);
     }

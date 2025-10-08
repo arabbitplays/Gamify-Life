@@ -45,7 +45,7 @@ void NotCursesPlane::drawVerticalLine(const CellHandle &cell, uint32_t length) {
 
 void NotCursesPlane::drawBox(const CellHandle &cell, glm::ivec2 extent) {
     setCursorPos(cell->pos);
-    ncplane_rounded_box(handle, cell->getNcHandle()->stylemask, cell->getNcHandle()->channels, extent.y, extent.x, 0);
+    ncplane_rounded_box(handle, cell->getNcHandle()->stylemask, cell->getNcHandle()->channels, cell->pos.y + extent.y - 1, cell->pos.x + extent.x - 1, 0);
 }
 
 void NotCursesPlane::setCursorPos(glm::ivec2 pos) {
