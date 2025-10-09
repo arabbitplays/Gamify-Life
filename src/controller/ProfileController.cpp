@@ -4,7 +4,7 @@
 
 #include "../../include/controller/ProfileController.hpp"
 
-ProfileController::ProfileController() {
+ProfileController::ProfileController(const std::shared_ptr<ITaskRepository> &task_repo) : task_repo(task_repo) {
     createNewProfile("Oschdi");
 }
 
@@ -16,7 +16,13 @@ std::string ProfileController::getName() const {
     return profile->getName();
 }
 
-void ProfileController::addDoneTaskToday(const TaskHandle &task) const {
+void ProfileController::addDoneTaskToday(const std::string& task_name) const {
+    TaskHandle task = task_repo->getTaskByName(task_name);
+    if (task == nullptr) {
+        fprintf(stderr, "Task %s not found!\n", task_name.c_str());
+        return;
+    }
+
     profile->addDoneTaskToday(task);
 }
 

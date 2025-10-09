@@ -9,8 +9,7 @@
 int main(int argc, char *argv[]) {
     auto app_controller = std::make_shared<AppController>();
 
-    std::vector<TaskHandle> tasks = app_controller->task_controller->getAvailableTasks();
-    app_controller->profile_controller->addDoneTaskToday(tasks.at(0));
+    app_controller->profile_controller->addDoneTaskToday("Running");
 
     FrontendHandle frontend = std::make_shared<NotCursesFrontend>();
     try {

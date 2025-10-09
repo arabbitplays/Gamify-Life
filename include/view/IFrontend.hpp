@@ -6,7 +6,7 @@
 #define GAMIFY_LIFE_IFRONTEND_HPP
 #include <memory>
 
-#include "src/controller/AppController.hpp"
+#include "../controller/AppController.hpp"
 
 
 class IFrontend;

@@ -20,3 +20,12 @@ std::vector<TaskHandle> InMemoryTaskRepository::getTasks() {
     return tasks;
 }
 
+TaskHandle InMemoryTaskRepository::getTaskByName(const std::string &task_name) {
+    for (auto& task : tasks) {
+        if (task->getName() == task_name) {
+            return task;
+        }
+    }
+    return nullptr;
+}
+

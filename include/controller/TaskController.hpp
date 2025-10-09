@@ -9,9 +9,9 @@
 
 class TaskController {
 public:
-    TaskController();
+    explicit TaskController(const std::shared_ptr<ITaskRepository> &task_repo);
 
-    std::vector<TaskHandle> getAvailableTasks() const;
+    [[nodiscard]] std::vector<TaskHandle> getAvailableTasks() const;
 private:
     std::shared_ptr<ITaskRepository> task_repo;
 };

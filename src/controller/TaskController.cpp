@@ -4,10 +4,7 @@
 
 #include "controller/TaskController.hpp"
 
-#include "persistence/InMemoryTaskRepository.hpp"
-
-TaskController::TaskController() {
-    task_repo = std::make_shared<InMemoryTaskRepository>();
+TaskController::TaskController(const std::shared_ptr<ITaskRepository> &task_repo) : task_repo(task_repo) {
     task_repo->loadTasks();
 }
 
