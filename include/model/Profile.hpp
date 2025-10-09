@@ -18,7 +18,10 @@ public:
     explicit Profile(std::string name);
 
     void addDoneTaskToday(const TaskHandle &task);
-    void printDoneTasks();
+    std::vector<TaskHandle> getDoneTasksToday();
+
+    std::string getName();
+
 private:
     std::string name;
     std::unordered_map<Date, std::vector<TaskHandle>> done_tasks;

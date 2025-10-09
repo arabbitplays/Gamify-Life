@@ -10,7 +10,7 @@
 class SizeErrorWindow : public NotCursesWindow {
 public:
     SizeErrorWindow(const PlaneHandle& parent_plane) : NotCursesWindow(parent_plane, glm::ivec2(5, 5), TOP_LEFT) {}
-    void draw() const override;
+    void draw() override;
 };
 
 

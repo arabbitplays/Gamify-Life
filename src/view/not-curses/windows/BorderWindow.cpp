@@ -8,7 +8,7 @@ BorderWindow::BorderWindow(const std::string &name, const PlaneHandle &parent_pl
                            const WindowAlignment alignment) : NotCursesWindow(parent_plane, min_extent, alignment), name(name) {
 }
 
-void BorderWindow::draw() const {
+void BorderWindow::draw() {
     NotCursesWindow::draw();
     std::string space = " ";
     const int32_t border_color_idx = ERROR;

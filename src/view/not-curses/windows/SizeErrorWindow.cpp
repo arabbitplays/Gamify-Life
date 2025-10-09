@@ -4,7 +4,7 @@
 
 #include "../../../../include/view/not_curses/windows/SizeErrorWindow.hpp"
 
-void SizeErrorWindow::draw() const {
+void SizeErrorWindow::draw() {
     border_plane->erase();
     border_plane->resize(parent_plane->getExtent());
     border_plane->writeText(glm::ivec2(0), "Window too small!", ERROR);

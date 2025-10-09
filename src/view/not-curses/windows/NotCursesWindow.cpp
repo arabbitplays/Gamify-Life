@@ -11,8 +11,9 @@ NotCursesWindow::NotCursesWindow(const PlaneHandle &parent_plane, const glm::ive
     content_plane->move(glm::ivec2(1, 1));
 }
 
-void NotCursesWindow::draw() const {
+void NotCursesWindow::draw() {
     border_plane->erase();
+    content_plane->erase();
 }
 
 WindowAlignment NotCursesWindow::getAlignment() const {
@@ -30,6 +31,7 @@ void NotCursesWindow::resize(const glm::ivec2 new_size) const {
 
 void NotCursesWindow::hide() {
     border_plane->erase();
+    content_plane->erase();
     hidden = true;
 }
 

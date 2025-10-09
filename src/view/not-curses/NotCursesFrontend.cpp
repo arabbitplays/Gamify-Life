@@ -4,19 +4,24 @@
 
 #include "../../../include/view/not_curses/NotCursesFrontend.hpp"
 
-#include "windows/TaskWindow.hpp"
+#include "view/not_curses/windows/ProfileWindow.hpp"
+#include "../../../include/view/not_curses/windows/TaskWindow.hpp"
 
 void NotCursesFrontend::init(const std::shared_ptr<AppController>& app_controller) {
     instance = std::make_shared<NotCursesInstance>();
     main_plane = instance->getStdPlane();
     window_manager = std::make_shared<WindowManager>(main_plane);
 
-    createWindow(glm::ivec2(10, 10), TOP_LEFT);
-    auto window = std::make_shared<TaskWindow>(app_controller->task_controller, main_plane, TOP_RIGHT);
+    WindowHandle window = std::make_shared<ProfileWindow>(app_controller->profile_controller, main_plane);
     windows.push_back(window);
     window_manager->addWindow(window);
-    createWindow(glm::ivec2(10, 10), BOTTOM_LEFT);
-    createWindow(glm::ivec2(10, 10), BOTTOM_RIGHT);
+
+    window = std::make_shared<TaskWindow>(app_controller->task_controller, main_plane);
+    windows.push_back(window);
+    window_manager->addWindow(window);
+
+    createWindow(glm::ivec2(5, 5), BOTTOM_LEFT);
+    createWindow(glm::ivec2(5, 5), BOTTOM_RIGHT);
 
 
     instance->render();

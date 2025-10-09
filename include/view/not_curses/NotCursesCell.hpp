@@ -16,6 +16,7 @@ enum Color {
     DEFAULT = 255,
     ERROR = 1,
     SELECTED = 2,
+    GOLD = 3,
 };
 
 class NotCursesCell;

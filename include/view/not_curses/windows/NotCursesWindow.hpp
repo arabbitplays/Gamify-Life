@@ -25,7 +25,7 @@ public:
     NotCursesWindow(const PlaneHandle &parent_plane, glm::ivec2 min_extent, WindowAlignment alignment);
     virtual ~NotCursesWindow() = default;
 
-    virtual void draw() const;
+    virtual void draw();
 
     [[nodiscard]] WindowAlignment getAlignment() const;
     void move(glm::ivec2 pos) const;

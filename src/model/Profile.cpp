@@ -18,13 +18,14 @@ void Profile::addDoneTaskToday(const TaskHandle &task) {
     done_tasks[today].push_back(task);
 }
 
-void Profile::printDoneTasks() {
-    const Date today = Date::createToday();
-    std::cout << std::left  << std::setw(15) << "Name"
-              << std::right << std::setw(10) << "Score" << "\n";
-
-    for (const auto& task : done_tasks[today]) {
-        std::cout << std::left  << std::setw(15) << task->getName()
-                << std::right << std::setw(10) << task->getScore() << "\n";
+std::vector<TaskHandle> Profile::getDoneTasksToday() {
+    Date today = Date::createToday();
+    if (done_tasks.contains(today)) {
+        return done_tasks[today];
     }
+    return {};
+}
+
+std::string Profile::getName() {
+    return name;
 }

@@ -2,23 +2,20 @@
 // Created by oschdi on 08.10.25.
 //
 
-#include "TaskWindow.hpp"
+#include "../../../../include/view/not_curses/windows/TaskWindow.hpp"
 
 #include <cmath>
 #include <vector>
 
-void TaskWindow::draw() const {
+#include "view/not_curses/widgets/Table.hpp"
+#include "view/not_curses/widgets/WidgetUtil.hpp"
+
+void TaskWindow::draw() {
     BorderWindow::draw();
     uint32_t col_distance = 20;
 
-    uint32_t header_y = 0;
-    content_plane->writeText(glm::ivec2(0, header_y), "Name:", DEFAULT, BOLD);
-    content_plane->writeText(glm::ivec2(col_distance, header_y), "Points:", DEFAULT, BOLD);
-
-    std::vector<TaskHandle> tasks = task_controller->getAvailableTasks();
-    for (uint32_t i = 0; i < tasks.size(); i++) {
-        uint32_t displayed_score = std::floor(tasks.at(i)->getScore());
-        content_plane->writeText(glm::ivec2(0, header_y + i + 1), tasks.at(i)->getName());
-        content_plane->writeText(glm::ivec2(col_distance, header_y + i + 1), std::to_string(displayed_score));
-    }
+    std::shared_ptr<Table> task_table = WidgetUtil::convertTaskListToTable(task_controller->getAvailableTasks());
+    glm::ivec2 content_size = content_plane->getExtent();
+    glm::ivec2 table_size = glm::ivec2(content_size.x, 20);
+    task_table->drawToPlane(content_plane, glm::ivec2(0), table_size);
 }
