@@ -31,10 +31,14 @@ std::string SelectionTable::getSelectedKey() {
 void SelectionTable::drawToPlane(const PlaneHandle &plane, const glm::ivec2 pos, const glm::ivec2 table_size) const {
     Table::drawToPlane(plane, pos, table_size);
 
-    if (!active)
+    if (!active || rows.empty())
         return;
     const uint32_t column_width = std::floor(table_size.x / float(column_count));
     const uint32_t string_max_length = column_width - 1;
 
     drawRow(plane, pos, selected_row, column_width, string_max_length, SELECTED);
+}
+
+bool SelectionTable::isEmpty() const {
+    return rows.empty();
 }

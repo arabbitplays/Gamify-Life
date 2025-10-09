@@ -21,6 +21,9 @@ public:
     std::string getSelectedKey();
 
     void drawToPlane(const PlaneHandle &plane, glm::ivec2 pos, const glm::ivec2 table_size) const override;
+
+    bool isEmpty() const;
+
 private:
     uint32_t selected_row = 0;
     bool active = false;

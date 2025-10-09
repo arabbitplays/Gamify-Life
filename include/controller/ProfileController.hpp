@@ -4,15 +4,15 @@
 
 #ifndef GAMIFY_LIFE_PROFILECONTROLLER_HPP
 #define GAMIFY_LIFE_PROFILECONTROLLER_HPP
+#include "IProfileGateway.hpp"
 #include "ITaskRepository.hpp"
 #include "model/Profile.hpp"
 
 
 class ProfileController {
 public:
-    explicit ProfileController(const std::shared_ptr<ITaskRepository> &task_repo);
+    ProfileController(const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_repo);
 
-    void createNewProfile(const std::string& name);
     std::string getName() const;
     void addDoneTaskToday(const std::string &task_name) const;
     float getTotalScoreToday() const;
@@ -21,6 +21,7 @@ private:
     ProfileHandle profile;
 
     std::shared_ptr<ITaskRepository> task_repo;
+    std::shared_ptr<IProfileGateway> profile_gateway;
 };
 
 

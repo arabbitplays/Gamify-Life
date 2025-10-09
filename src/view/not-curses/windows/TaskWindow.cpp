@@ -25,10 +25,16 @@ void TaskWindow::draw() {
     tasks_table->clear();
     WidgetUtil::fillTableWithTaskList(tasks_table, task_controller->getAvailableTasks());
 
-    tasks_table->setActive(active);
-    glm::ivec2 content_size = content_plane->getExtent();
-    glm::ivec2 table_size = glm::ivec2(content_size.x, 20);
-    tasks_table->drawToPlane(content_plane, glm::ivec2(0), table_size);
+    if (tasks_table->isEmpty()) {
+        active = false;
+        content_plane->writeText(glm::ivec2(0), "No more tasks for today! :)", GOLD, BOLD);
+    } else {
+        tasks_table->setActive(active);
+        glm::ivec2 content_size = content_plane->getExtent();
+        glm::ivec2 table_size = glm::ivec2(content_size.x, 20);
+        tasks_table->drawToPlane(content_plane, glm::ivec2(0), table_size);
+    }
+
 }
 
 void TaskWindow::handleInput(ncinput input) {

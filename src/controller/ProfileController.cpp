@@ -4,12 +4,10 @@
 
 #include "../../include/controller/ProfileController.hpp"
 
-ProfileController::ProfileController(const std::shared_ptr<ITaskRepository> &task_repo) : task_repo(task_repo) {
-    createNewProfile("Oschdi");
-}
-
-void ProfileController::createNewProfile(const std::string& name) {
-    profile = std::make_shared<Profile>(name);
+ProfileController::ProfileController(const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_gateway)
+        : task_repo(task_repo), profile_gateway(profile_gateway) {
+    profile_gateway->loadProfile();
+    profile = profile_gateway->getProfile();
 }
 
 std::string ProfileController::getName() const {
