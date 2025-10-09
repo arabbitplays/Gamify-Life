@@ -6,18 +6,19 @@
 #define GAMIFY_LIFE_PROFILEWINDOW_HPP
 #include "BorderWindow.hpp"
 #include "controller/ProfileController.hpp"
+#include "view/not_curses/widgets/SelectionTable.hpp"
 
 
 class ProfileWindow : public BorderWindow {
 public:
-    ProfileWindow(const std::shared_ptr<ProfileController> &profile_controller, const PlaneHandle &parent_plane)
-    : BorderWindow("Profile", parent_plane, glm::ivec2(10, 10), TOP_LEFT), profile_controller(profile_controller) {
-        setMargin(glm::ivec2(2, 1));
-    }
+    ProfileWindow(const std::shared_ptr<ProfileController> &profile_controller, const PlaneHandle &parent_plane);
     void draw() override;
 
 private:
     std::shared_ptr<ProfileController> profile_controller;
+
+    SelectionTableHandle done_tasks_table;
+
 };
 
 

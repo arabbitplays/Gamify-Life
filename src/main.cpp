@@ -8,9 +8,6 @@
 
 int main(int argc, char *argv[]) {
     auto app_controller = std::make_shared<AppController>();
-
-    app_controller->profile_controller->addDoneTaskToday("Running");
-
     FrontendHandle frontend = std::make_shared<NotCursesFrontend>();
     try {
         frontend->init(app_controller);

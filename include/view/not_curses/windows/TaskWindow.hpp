@@ -6,6 +6,7 @@
 #define GAMIFY_LIFE_TASKWINDOW_HPP
 #include "controller/ProfileController.hpp"
 #include "controller/TaskController.hpp"
+#include "view/not_curses/widgets/SelectionTable.hpp"
 #include "view/not_curses/windows/BorderWindow.hpp"
 
 class TaskWindow : public BorderWindow {
@@ -13,11 +14,7 @@ class TaskWindow : public BorderWindow {
 
 public:
     TaskWindow(const std::shared_ptr<TaskController> &task_controller,
-            const std::shared_ptr<ProfileController> &profile_controller, const PlaneHandle &parent_plane)
-            : BorderWindow(TASK_WINDOW_NAME, parent_plane, glm::ivec2(10, 10), TOP_RIGHT),
-            task_controller(task_controller), profile_controller(profile_controller) {
-        setMargin(glm::ivec2(2, 1));
-    }
+            const std::shared_ptr<ProfileController> &profile_controller, const PlaneHandle &parent_plane);
     void draw() override;
     void handleInput(ncinput input) override;
 
@@ -26,6 +23,8 @@ public:
 private:
     std::shared_ptr<TaskController> task_controller;
     std::shared_ptr<ProfileController> profile_controller;
+
+    SelectionTableHandle tasks_table;
 };
 
 

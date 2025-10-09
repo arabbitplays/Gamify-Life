@@ -45,7 +45,11 @@ void NotCursesFrontend::handleInput() {
     timespec delay = { .tv_sec = 0, .tv_nsec = 16 * 1000 * 1000 }; // ~60 FPS
 
     ncinput ni;
-    notcurses_get(instance->getHandle(), &delay, &ni);
+    int ret = notcurses_get(instance->getHandle(), &delay, &ni);
+
+    if (ret == 0) {
+        return;
+    }
 
     if (ni.evtype == NCTYPE_PRESS && ni.id == 'q') {
         stopped = true;

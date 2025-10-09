@@ -33,10 +33,18 @@ void Table::drawToPlane(const PlaneHandle &plane, const glm::ivec2 pos, const gl
     }
 
     for (uint32_t i = 0; i < rows.size(); i++) {
-        for (uint32_t j = 0; j < column_count; j++) {
-            std::string trimmed_string = trimToLength(rows.at(i).at(j), string_max_length);
-            plane->writeText(glm::ivec2(pos.x + j * column_width, pos.y + i + 1), trimmed_string);
-        }
+        drawRow(plane, pos, i, column_width, string_max_length);
+    }
+}
+
+void Table::clear() {
+    rows.clear();
+}
+
+void Table::drawRow(const PlaneHandle& plane, glm::ivec2 table_pos, uint32_t row_index, uint32_t column_width, uint32_t string_max_length, Color color) const {
+    for (uint32_t j = 0; j < column_count; j++) {
+        std::string trimmed_string = trimToLength(rows.at(row_index).at(j), string_max_length);
+        plane->writeText(glm::ivec2(table_pos.x + j * column_width, table_pos.y + row_index + 1), trimmed_string, color);
     }
 }
 
