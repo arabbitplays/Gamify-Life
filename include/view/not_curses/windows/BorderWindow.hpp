@@ -13,6 +13,7 @@ public:
 
 protected:
     std::string name;
+    bool active = false;
 
 private:
     static constexpr uint32_t NAME_OFFSET = 5;

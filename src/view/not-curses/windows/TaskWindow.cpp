@@ -19,3 +19,19 @@ void TaskWindow::draw() {
     glm::ivec2 table_size = glm::ivec2(content_size.x, 20);
     task_table->drawToPlane(content_plane, glm::ivec2(0), table_size);
 }
+
+void TaskWindow::handleInput(ncinput input) {
+    BorderWindow::handleInput(input);
+
+    if (active) {
+        handleActiveInput(input);
+    } else {
+        if (input.evtype == NCTYPE_PRESS && input.id == 'i') {
+            active = true;
+        }
+    }
+}
+
+void TaskWindow::handleActiveInput(ncinput input) {
+
+}

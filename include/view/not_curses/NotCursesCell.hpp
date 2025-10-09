@@ -17,6 +17,7 @@ enum Color {
     ERROR = 1,
     SELECTED = 2,
     GOLD = 3,
+    ACTIVE = 1,
 };
 
 class NotCursesCell;

@@ -26,6 +26,7 @@ public:
     virtual ~NotCursesWindow() = default;
 
     virtual void draw();
+    virtual void handleInput([[maybe_unused]] ncinput input) {};
 
     [[nodiscard]] WindowAlignment getAlignment() const;
     void move(glm::ivec2 pos) const;

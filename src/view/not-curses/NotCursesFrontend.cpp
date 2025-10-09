@@ -16,7 +16,7 @@ void NotCursesFrontend::init(const std::shared_ptr<AppController>& app_controlle
     windows.push_back(window);
     window_manager->addWindow(window);
 
-    window = std::make_shared<TaskWindow>(app_controller->task_controller, main_plane);
+    window = std::make_shared<TaskWindow>(app_controller->task_controller, app_controller->profile_controller, main_plane);
     windows.push_back(window);
     window_manager->addWindow(window);
 
@@ -29,14 +29,14 @@ void NotCursesFrontend::init(const std::shared_ptr<AppController>& app_controlle
 
 void NotCursesFrontend::run() {
     while (!stopped) {
+        handleInput();
+
         window_manager->updateWindows(main_plane->getExtent());
         for (const auto& window : windows) {
             if (window->isHidden())
                 continue;
             window->draw();
         }
-
-        handleInput();
         instance->render();
     }
 }
@@ -47,17 +47,14 @@ void NotCursesFrontend::handleInput() {
     ncinput ni;
     notcurses_get(instance->getHandle(), &delay, &ni);
 
-    // Check if the event was a keypress and if the key was 'q'
     if (ni.evtype == NCTYPE_PRESS && ni.id == 'q') {
         stopped = true;
     }
 
-    if (ni.evtype == NCTYPE_PRESS && ni.id == 'a') {
-        windows.at(0)->hide();
-    }
-
-    if (ni.evtype == NCTYPE_PRESS && ni.id == 'd') {
-        windows.at(0)->show();
+    for (const auto& window : windows) {
+        if (window->isHidden())
+            continue;
+        window->handleInput(ni);
     }
 }
 
