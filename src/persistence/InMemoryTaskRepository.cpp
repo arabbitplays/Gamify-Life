@@ -8,6 +8,8 @@
 void InMemoryTaskRepository::loadTasks() {
     const auto task1 = std::make_shared<Task>("Stretching", 5);
     const auto task2 = std::make_shared<Task>("Running", 10);
+    const auto task3 = std::make_shared<Task>("Being Awesome", 0);
+    addTask(task3);
     addTask(task1);
     addTask(task2);
 }
