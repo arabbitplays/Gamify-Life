@@ -7,7 +7,8 @@
 #include <memory>
 #include <glm/vec2.hpp>
 
-#include "../NotCursesInstance.hpp"
+#include "view/not_curses/NotCursesPlane.hpp"
+
 
 class NotCursesWindow;
 typedef std::shared_ptr<NotCursesWindow> WindowHandle;
@@ -38,13 +39,14 @@ public:
 
 protected:
     static PlaneHandle createPlane(const PlaneHandle & parent_plane, const glm::ivec2 extent);
-
-    static constexpr uint32_t LEFT_MARGIN = 2;
+    void setMargin(glm::ivec2 new_margin);
 
     PlaneHandle parent_plane;
-    PlaneHandle plane;
+    PlaneHandle border_plane;
+    PlaneHandle content_plane;
 
     glm::ivec2 min_extent;
+    glm::ivec2 margin{};
     WindowAlignment alignment;
     bool hidden = false;
 };

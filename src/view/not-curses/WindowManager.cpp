@@ -2,14 +2,9 @@
 // Created by oschdi on 08.10.25.
 //
 
-#include "../../../include/view/not_curses/WindowManager.hpp"
+#include "view/not_curses/WindowManager.hpp"
 
-#include "NotCursesCell.hpp"
-#include "NotCursesCell.hpp"
-#include "NotCursesCell.hpp"
-#include "NotCursesCell.hpp"
-#include "SizeErrorWindow.hpp"
-#include "../../../include/view/not_curses/NotCursesCell.hpp"
+#include "view/not_curses/windows/SizeErrorWindow.hpp"
 
 WindowManager::WindowManager(const PlaneHandle& main_plane) {
     size_error_window = std::make_shared<SizeErrorWindow>(main_plane);

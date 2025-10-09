@@ -5,8 +5,7 @@
 #ifndef GAMIFY_LIFE_ITASKREPOSITORY_HPP
 #define GAMIFY_LIFE_ITASKREPOSITORY_HPP
 #include <vector>
-
-#include "Task.hpp"
+#include "model/Task.hpp"
 
 class ITaskRepository {
 public:

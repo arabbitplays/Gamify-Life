@@ -8,12 +8,6 @@ project('GamifyLife',
 
 incdirs = [
     include_directories('include'),
-    include_directories('include/controller'),
-    include_directories('include/model'),
-    include_directories('include/view'),
-    include_directories('include/view/not_curses'),
-    include_directories('include/view/not_curses/windows'),
-    include_directories('include/persistence'),
 ]
 
 yaml = dependency('yaml-cpp')

@@ -6,7 +6,8 @@
 #define GAMIFY_LIFE_APPCONTROLLER_HPP
 #include <memory>
 
-#include "TaskController.hpp"
+#include "controller/TaskController.hpp"
+
 
 struct AppController {
 public:

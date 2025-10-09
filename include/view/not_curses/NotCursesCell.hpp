@@ -24,6 +24,7 @@ typedef std::shared_ptr<NotCursesCell> CellHandle;
 class NotCursesCell {
 public:
     NotCursesCell();
+    NotCursesCell(uint16_t style_mask, uint64_t channels);
 
     void setForegroundColor(uint32_t color_index);
     void setBackgroundColor(uint32_t color_index);

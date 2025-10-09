@@ -2,19 +2,17 @@
 // Created by oschdi on 08.10.25.
 //
 
-#include "../../../../include/view/not_curses/windows/NotCursesWindow.hpp"
-
-#include "NotCursesCell.hpp"
+#include "view/not_curses/windows/NotCursesWindow.hpp"
 
 NotCursesWindow::NotCursesWindow(const PlaneHandle &parent_plane, const glm::ivec2 min_extent, const WindowAlignment alignment)
     : parent_plane(parent_plane), min_extent(min_extent), alignment(alignment) {
-    plane = createPlane(parent_plane, min_extent);
+    border_plane = createPlane(parent_plane, min_extent);
+    content_plane = createPlane(border_plane, min_extent - glm::ivec2(2, 2));
+    content_plane->move(glm::ivec2(1, 1));
 }
 
 void NotCursesWindow::draw() const {
-    auto cell = std::make_shared<NotCursesCell>();
-    plane->erase();
-    plane->drawPerimeter();
+    border_plane->erase();
 }
 
 WindowAlignment NotCursesWindow::getAlignment() const {
@@ -22,15 +20,16 @@ WindowAlignment NotCursesWindow::getAlignment() const {
 }
 
 void NotCursesWindow::move(const glm::ivec2 pos) const {
-    plane->move(pos);
+    border_plane->move(pos);
 }
 
 void NotCursesWindow::resize(const glm::ivec2 new_size) const {
-    plane->resize(new_size);
+    border_plane->resize(new_size);
+    content_plane->resize(new_size - glm::ivec2(2, 2) - 2 * margin);
 }
 
 void NotCursesWindow::hide() {
-    plane->erase();
+    border_plane->erase();
     hidden = true;
 }
 
@@ -49,4 +48,9 @@ bool NotCursesWindow::isHidden() const {
 
 PlaneHandle NotCursesWindow::createPlane(const PlaneHandle &parent_plane, const glm::ivec2 extent) {
     return std::make_shared<NotCursesPlane>(parent_plane, extent);
+}
+
+void NotCursesWindow::setMargin(glm::ivec2 new_margin) {
+    margin = new_margin;
+    content_plane->move(glm::ivec2(1, 1) + margin);
 }

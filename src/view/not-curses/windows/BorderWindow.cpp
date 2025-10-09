@@ -10,6 +10,10 @@ BorderWindow::BorderWindow(const std::string &name, const PlaneHandle &parent_pl
 
 void BorderWindow::draw() const {
     NotCursesWindow::draw();
-    plane->writeText(glm::ivec2(NAME_OFFSET, 0), LEFT_NAME_SEPARATOR + name + RIGHT_NAME_SEPARATOR);
-}
+    std::string space = " ";
+    const int32_t border_color_idx = ERROR;
 
+    border_plane->drawPerimeter(border_color_idx);
+    border_plane->writeText(glm::ivec2(NAME_OFFSET, 0), LEFT_NAME_SEPARATOR + space + name + space + RIGHT_NAME_SEPARATOR, border_color_idx);
+    border_plane->writeText(glm::ivec2(NAME_OFFSET + 2, 0), name, DEFAULT, BOLD);
+}

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <memory>
 
-#include "Profile.hpp"
 #include "controller/TaskController.hpp"
+#include "model/Profile.hpp"
 #include "view/IFrontend.hpp"
 #include "view/not_curses/NotCursesFrontend.hpp"
 

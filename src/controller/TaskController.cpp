@@ -2,9 +2,9 @@
 // Created by oschdi on 08.10.25.
 //
 
-#include "../../include/controller/TaskController.hpp"
+#include "controller/TaskController.hpp"
 
-#include "InMemoryTaskRepository.hpp"
+#include "persistence/InMemoryTaskRepository.hpp"
 
 TaskController::TaskController() {
     task_repo = std::make_shared<InMemoryTaskRepository>();

@@ -13,8 +13,8 @@ public:
 
 private:
     static constexpr uint32_t NAME_OFFSET = 5;
-    static constexpr char* RIGHT_NAME_SEPARATOR = "╰";
-    static constexpr char* LEFT_NAME_SEPARATOR = "╯";
+    static constexpr char* RIGHT_NAME_SEPARATOR = "╭";
+    static constexpr char* LEFT_NAME_SEPARATOR = "╮";
     std::string name;
 };
 
