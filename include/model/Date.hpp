@@ -12,6 +12,7 @@ struct Date {
     Date(uint32_t year, uint32_t month, uint32_t day);
 
     bool operator==(const Date & d) const;
+    bool operator<(const Date& other) const;
 
     uint32_t year, month, day;
 

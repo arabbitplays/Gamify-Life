@@ -25,7 +25,7 @@ void SelectionTable::moveSelectionUp(uint32_t distance) {
 }
 
 std::string SelectionTable::getSelectedKey() {
-    return rows.at(selected_row).at(0);
+    return rows.at(getSelectedRow()).at(0);
 }
 
 void SelectionTable::drawToPlane(const PlaneHandle &plane, const glm::ivec2 pos, const glm::ivec2 table_size) const {
@@ -36,7 +36,11 @@ void SelectionTable::drawToPlane(const PlaneHandle &plane, const glm::ivec2 pos,
     const uint32_t column_width = std::floor(table_size.x / float(column_count));
     const uint32_t string_max_length = column_width - 1;
 
-    drawRow(plane, pos, selected_row, column_width, string_max_length, SELECTED);
+    drawRow(plane, pos, getSelectedRow(), column_width, string_max_length, SELECTED);
+}
+
+uint32_t SelectionTable::getSelectedRow() const {
+    return std::max(0, std::min(static_cast<int32_t>(selected_row), static_cast<int32_t>(rows.size()) - 1));
 }
 
 bool SelectionTable::isEmpty() const {

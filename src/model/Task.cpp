@@ -17,3 +17,7 @@ std::string Task::getName() const {
 float Task::getScore() const {
     return static_cast<float>(score);
 }
+
+std::string Task::getStreakName() {
+    return streak_name;
+}

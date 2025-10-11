@@ -16,6 +16,16 @@ void Profile::addDoneTaskToday(const TaskHandle &task) {
     }
 
     done_tasks[today].push_back(task);
+    if (streaks.contains(task->getStreakName())) {
+        streaks[task->getStreakName()]->checkStreakForToday();
+    }
+}
+
+void Profile::addStreak(const StreakHandle &streak) {
+    std::string streak_name = streak->getName();
+    if (!streaks.contains(streak->getName())) {
+        streaks[streak->getName()] = streak;
+    }
 }
 
 std::vector<TaskHandle> Profile::getDoneTasksToday() {
@@ -24,6 +34,10 @@ std::vector<TaskHandle> Profile::getDoneTasksToday() {
         return done_tasks[today];
     }
     return {};
+}
+
+std::unordered_map<Date, std::vector<TaskHandle>> Profile::getDoneTasks() {
+    return done_tasks;
 }
 
 std::string Profile::getName() {

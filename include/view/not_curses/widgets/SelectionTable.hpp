@@ -25,6 +25,8 @@ public:
     bool isEmpty() const;
 
 private:
+    uint32_t getSelectedRow() const;
+
     uint32_t selected_row = 0;
     bool active = false;
 };

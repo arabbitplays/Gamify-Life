@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <bits/unordered_map.h>
 
 class Task;
 typedef std::shared_ptr<Task> TaskHandle;
@@ -17,8 +18,12 @@ public:
 
     [[nodiscard]] std::string getName() const;
     [[nodiscard]] float getScore() const;
+
+    std::string getStreakName();
+
 private:
     std::string name;
+    std::string streak_name;
     uint32_t score;
 };
 

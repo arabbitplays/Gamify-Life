@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Date.hpp"
+#include "Streak.hpp"
 #include "Task.hpp"
 
 class Profile;
@@ -18,13 +19,18 @@ public:
     explicit Profile(std::string name);
 
     void addDoneTaskToday(const TaskHandle &task);
+    void addStreak(const StreakHandle& streak);
+
     std::vector<TaskHandle> getDoneTasksToday();
+    std::unordered_map<Date, std::vector<TaskHandle>> getDoneTasks();
 
     std::string getName();
 
+
 private:
     std::string name;
-    std::unordered_map<Date, std::vector<TaskHandle>> done_tasks;
+    std::unordered_map<Date, std::vector<TaskHandle>> done_tasks{};
+    std::unordered_map<std::string, StreakHandle> streaks{};
 };
 
 
