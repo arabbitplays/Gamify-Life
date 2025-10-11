@@ -14,7 +14,7 @@ typedef std::shared_ptr<Task> TaskHandle;
 
 class Task {
 public:
-    Task(std::string name, uint32_t score);
+    Task(std::string name, uint32_t score, std::string streak_name = "");
 
     [[nodiscard]] std::string getName() const;
     [[nodiscard]] float getScore() const;

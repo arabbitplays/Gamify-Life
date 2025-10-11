@@ -6,6 +6,7 @@
 
 #include "view/not_curses/windows/ProfileWindow.hpp"
 #include "../../../include/view/not_curses/windows/TaskWindow.hpp"
+#include "view/not_curses/windows/StreakWindow.hpp"
 
 void NotCursesFrontend::init(const std::shared_ptr<AppController>& app_controller) {
     instance = std::make_shared<NotCursesInstance>();
@@ -20,7 +21,10 @@ void NotCursesFrontend::init(const std::shared_ptr<AppController>& app_controlle
     windows.push_back(window);
     window_manager->addWindow(window);
 
-    createWindow(glm::ivec2(5, 5), BOTTOM_LEFT);
+    window = std::make_shared<StreakWindow>(app_controller->profile_controller, main_plane);
+    windows.push_back(window);
+    window_manager->addWindow(window);
+
     createWindow(glm::ivec2(5, 5), BOTTOM_RIGHT);
 
 

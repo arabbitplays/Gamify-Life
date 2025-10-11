@@ -20,7 +20,8 @@ public:
 
     void checkStreakForToday();
     void checkForDate(const Date& date);
-    std::set<Date> getCheckedDates();
+
+    std::vector<Date> getCheckedDatesSince(const Date& date);
 
     std::string getName();
 

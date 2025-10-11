@@ -19,6 +19,7 @@ public:
     explicit Profile(std::string name);
 
     void addDoneTaskToday(const TaskHandle &task);
+    void addDoneTask(const TaskHandle& task, const Date& date);
     void addStreak(const StreakHandle& streak);
 
     std::vector<TaskHandle> getDoneTasksToday();

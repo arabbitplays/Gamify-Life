@@ -10,12 +10,16 @@ Profile::Profile(std::string name) : name(std::move(name)) {
 }
 
 void Profile::addDoneTaskToday(const TaskHandle &task) {
-    Date today = Date::createToday();
-    if (!done_tasks.contains(today)) {
-        done_tasks[today] = {};
+    addDoneTask(task, Date::createToday());
+
+}
+
+void Profile::addDoneTask(const TaskHandle &task, const Date &date) {
+    if (!done_tasks.contains(date)) {
+        done_tasks[date] = {};
     }
 
-    done_tasks[today].push_back(task);
+    done_tasks[date].push_back(task);
     if (streaks.contains(task->getStreakName())) {
         streaks[task->getStreakName()]->checkStreakForToday();
     }

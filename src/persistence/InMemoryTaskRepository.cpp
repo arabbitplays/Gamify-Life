@@ -6,12 +6,14 @@
 #include "persistence/InMemoryTaskRepository.hpp"
 
 void InMemoryTaskRepository::loadTasks() {
-    const auto task1 = std::make_shared<Task>("Stretching", 5);
-    const auto task2 = std::make_shared<Task>("Running", 10);
-    const auto task3 = std::make_shared<Task>("Being Awesome", 0);
+    const auto task1 = std::make_shared<Task>("Stretching", 5, "Sport");
+    const auto task2 = std::make_shared<Task>("Running", 10, "Sport");
+    const auto task3 = std::make_shared<Task>("Spanish", 10, "Language");
+    const auto task4 = std::make_shared<Task>("Being Awesome", 0);
     addTask(task3);
     addTask(task1);
     addTask(task2);
+    addTask(task4);
 }
 
 void InMemoryTaskRepository::addTask(const TaskHandle &task) {

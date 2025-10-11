@@ -6,7 +6,7 @@
 
 #include "../../include/model/Task.hpp"
 
-Task::Task(std::string name, const uint32_t score) : name(std::move(name)), score(score) {
+Task::Task(std::string name, const uint32_t score, std::string streak_name) : name(std::move(name)), streak_name(std::move(streak_name)), score(score) {
 
 }
 

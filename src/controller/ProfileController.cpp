@@ -3,11 +3,23 @@
 //
 
 #include "../../include/controller/ProfileController.hpp"
+#include "persistence/StreakFactory.hpp"
 
 ProfileController::ProfileController(const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_gateway)
         : task_repo(task_repo), profile_gateway(profile_gateway) {
     profile_gateway->loadProfile();
     profile = profile_gateway->getProfile();
+
+    // TODO remove this
+    std::vector<TaskHandle> tasks = task_repo->getTasks();
+    Date date = Date::createToday();
+    profile->addDoneTask(tasks.at(1), date);
+    date = date.createPrev();
+    profile->addDoneTask(tasks.at(1), date);
+    profile->addDoneTask(tasks.at(2), date);
+    profile->addDoneTask(tasks.at(0), date); // lang
+    date = date.createPrev(5);
+    profile->addDoneTask(tasks.at(0), date);
 }
 
 std::string ProfileController::getName() const {
@@ -35,4 +47,8 @@ float ProfileController::getTotalScoreToday() const {
 
 std::vector<TaskHandle> ProfileController::getTasksDoneToday() const {
     return profile->getDoneTasksToday();
+}
+
+std::vector<StreakHandle> ProfileController::getStreaks() const {
+    return StreakFactory::createStreaksForProfile(profile); // TODO return the ones in the profile here
 }

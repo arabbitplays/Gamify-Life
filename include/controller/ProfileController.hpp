@@ -17,6 +17,9 @@ public:
     void addDoneTaskToday(const std::string &task_name) const;
     float getTotalScoreToday() const;
     std::vector<TaskHandle> getTasksDoneToday() const;
+
+    std::vector<StreakHandle> getStreaks() const;
+
 private:
     ProfileHandle profile;
 

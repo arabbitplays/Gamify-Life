@@ -17,8 +17,14 @@ void Streak::checkForDate(const Date &date) {
     checked_dates.insert(date);
 }
 
-std::set<Date> Streak::getCheckedDates() {
-    return checked_dates;
+std::vector<Date> Streak::getCheckedDatesSince(const Date& date) {
+    std::vector<Date> result {};
+
+    auto it = checked_dates.lower_bound(date);
+    for (; it != checked_dates.end(); ++it) {
+        result.push_back(*it);
+    }
+    return result;
 }
 
 std::string Streak::getName() {

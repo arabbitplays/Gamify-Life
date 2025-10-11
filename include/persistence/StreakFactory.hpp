@@ -13,7 +13,7 @@ class StreakFactory {
 public:
     StreakFactory() = delete;
 
-    static std::vector<StreakHandle> createStreakForProfile(const ProfileHandle& profile) {
+    static std::vector<StreakHandle> createStreaksForProfile(const ProfileHandle& profile) {
         std::unordered_map<Date, std::vector<TaskHandle>> done_tasks = profile->getDoneTasks();
         std::unordered_map<std::string, StreakHandle> streak_map{};
 
