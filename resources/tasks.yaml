@@ -1,0 +1,10 @@
+tasks:
+  - name: "Stretching"
+    score: 5
+    streak: "Sport"
+  - name: "Running"
+    score: 10
+    streak: "Sport"
+  - name: "Spanish"
+    score: 5
+    streak: "Language"

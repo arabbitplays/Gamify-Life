@@ -9,6 +9,7 @@
 #include <functional>
 
 struct Date {
+    Date() = default;
     Date(uint32_t year, uint32_t month, uint32_t day);
     explicit Date(std::chrono::year_month_day ymd);
 

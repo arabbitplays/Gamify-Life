@@ -10,8 +10,9 @@
 class InMemoryProfileGateway : public IProfileGateway {
 public:
     InMemoryProfileGateway() = default;
-    void loadProfile() override;
-    ProfileHandle getProfile() override;
+
+    ProfileHandle loadProfile(std::string name) override;
+    bool storeProfile(ProfileHandle) override;
 
 private:
     ProfileHandle profile;

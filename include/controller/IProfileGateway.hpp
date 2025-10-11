@@ -10,8 +10,8 @@ class IProfileGateway {
 public:
     virtual ~IProfileGateway() = default;
 
-    virtual void loadProfile() = 0;
-    virtual ProfileHandle getProfile() = 0;
+    virtual ProfileHandle loadProfile(std::string name) = 0;
+    virtual bool storeProfile(ProfileHandle) = 0;
 };
 
 

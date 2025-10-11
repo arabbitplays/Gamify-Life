@@ -3,7 +3,7 @@
 //
 
 
-#include "persistence/InMemoryTaskRepository.hpp"
+#include "../../../include/persistence/in_memory/InMemoryTaskRepository.hpp"
 
 void InMemoryTaskRepository::loadTasks() {
     const auto task1 = std::make_shared<Task>("Stretching", 5, "Sport");

@@ -1,0 +1,22 @@
+name: Oschdi
+done:
+  - date:
+      day: 5
+      month: 10
+      year: 2025
+    tasks:
+      - Stretching
+  - date:
+      day: 10
+      month: 10
+      year: 2025
+    tasks:
+      - Running
+      - Spanish
+      - Stretching
+  - date:
+      day: 11
+      month: 10
+      year: 2025
+    tasks:
+      - Running

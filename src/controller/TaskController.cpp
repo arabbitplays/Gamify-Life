@@ -9,7 +9,7 @@ TaskController::TaskController(const std::shared_ptr<ITaskRepository> &task_repo
 }
 
 std::vector<TaskHandle> TaskController::getAvailableTasks() const {
-    ProfileHandle profile = profile_gateway->getProfile();
+    ProfileHandle profile = profile_gateway->loadProfile("Oschdi");
     std::vector done_tasks = profile->getDoneTasksToday();
     std::vector<TaskHandle> tasks = task_repo->getTasks();
     std::unordered_map<std::string, TaskHandle> available_task_map{};

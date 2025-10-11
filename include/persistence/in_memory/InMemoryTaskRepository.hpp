@@ -6,7 +6,7 @@
 #define GAMIFY_LIFE_TASKREPOSITORY_HPP
 #include <vector>
 
-#include "../model/Task.hpp"
+#include "../../model/Task.hpp"
 #include "controller/ITaskRepository.hpp"
 
 
