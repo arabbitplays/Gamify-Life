@@ -6,7 +6,8 @@
 
 #include <fstream>
 
-YamlProfileGateway::YamlProfileGateway(const std::string &file_path) : file_path(file_path) {
+YamlProfileGateway::YamlProfileGateway(const std::string &file_path, const std::shared_ptr<ITaskRepository>& task_repo)
+        : file_path(file_path), task_repository(task_repo) {
 
 }
 
@@ -27,8 +28,14 @@ ProfileHandle YamlProfileGateway::loadProfile(std::string name) {
             }
 
             auto date = date_node[DATE_KEY].as<Date>();
-            for (const auto& task_name : profile_node[TASKS_NAMES_KEY]) {
-                // TODO
+            for (const auto& name_node : date_node[TASKS_NAMES_KEY]) {
+                std::string task_name = name_node.as<std::string>();
+                TaskHandle task = task_repository->getTaskByName(task_name);
+                if (task == nullptr) {
+                    fprintf(stderr, "Task %s doesnt exist!", task_name.c_str());
+                    continue;
+                }
+                profile->addDoneTask(task, date);
             }
         }
 

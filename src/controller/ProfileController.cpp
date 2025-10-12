@@ -23,6 +23,7 @@ void ProfileController::addDoneTaskToday(const std::string& task_name) const {
     }
 
     profile->addDoneTaskToday(task);
+    profile_gateway->storeProfile(profile);
 }
 
 float ProfileController::getTotalScoreToday() const {

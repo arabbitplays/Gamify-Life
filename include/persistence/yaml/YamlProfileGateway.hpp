@@ -7,6 +7,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "controller/IProfileGateway.hpp"
+#include "controller/ITaskRepository.hpp"
 
 namespace YAML {
     template<>
@@ -41,13 +42,14 @@ private:
     static constexpr std::string TASKS_NAMES_KEY = "tasks";
 
 public:
-    explicit YamlProfileGateway(const std::string &file_path);
+    YamlProfileGateway(const std::string &file_path, const std::shared_ptr<ITaskRepository>& task_repo);
 
     ProfileHandle loadProfile(std::string name) override;
     bool storeProfile(ProfileHandle) override;
 
 private:
     std::string file_path;
+    std::shared_ptr<ITaskRepository> task_repository;
 };
 
 
