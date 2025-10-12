@@ -1,7 +1,13 @@
 name: Oschdi
 done:
   - date:
-      day: 5
+      day: 12
+      month: 10
+      year: 2025
+    tasks:
+      - Stretching
+  - date:
+      day: 7
       month: 10
       year: 2025
     tasks:
@@ -13,7 +19,7 @@ done:
     tasks:
       - Stretching
   - date:
-      day: 7
+      day: 5
       month: 10
       year: 2025
     tasks:

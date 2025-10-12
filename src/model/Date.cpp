@@ -27,6 +27,15 @@ uint32_t Date::getDay() const {
     return static_cast<uint32_t>(ymd.day());
 }
 
+uint32_t Date::getWeekdayIdx() const {
+    using namespace std::chrono;
+
+    sys_days sd = ymd;
+    weekday wd{sd};
+
+    return wd.c_encoding();
+}
+
 Date Date::createNext(uint32_t delta) const {
     using namespace std::chrono;
     sys_days sd{ymd};

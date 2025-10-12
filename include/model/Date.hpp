@@ -16,6 +16,7 @@ struct Date {
     [[nodiscard]] uint32_t getYear() const;
     [[nodiscard]] uint32_t getMonth() const;
     [[nodiscard]] uint32_t getDay() const;
+    uint32_t getWeekdayIdx() const;
 
     Date createNext(uint32_t delta = 1) const;
     Date createPrev(uint32_t delta = 1) const;
