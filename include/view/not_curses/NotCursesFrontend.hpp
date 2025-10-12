@@ -11,6 +11,8 @@
 #include "WindowManager.hpp"
 #include "view/IFrontend.hpp"
 
+template<typename T>
+concept DerivedFromWindow = std::is_base_of_v<NotCursesWindow, T>;
 
 class NotCursesFrontend : public IFrontend {
 public:
@@ -24,7 +26,14 @@ public:
     void stop() override;
 
 private:
-    void createWindow(glm::ivec2 min_extent, WindowAlignment alignment);
+
+    template<DerivedFromWindow T, typename... Args>
+    std::shared_ptr<T> createWindow(Args&&... args) {
+        std::shared_ptr<T> window = std::make_shared<T>(std::forward<Args>(args)...);
+        windows.push_back(window);
+        window_manager->addWindow(window);
+        return window;
+    }
 
     std::shared_ptr<NotCursesInstance> instance;
     PlaneHandle main_plane;

@@ -45,6 +45,19 @@ public:
 
         return result;
     }
+
+    static std::string getDateAsStringWithoutYear(const Date& date) {
+        std::string result = "";
+        if (date.getDay() < 10)
+            result += "0";
+        result += std::to_string(date.getDay()) + ".";
+
+        if (date.getMonth() < 10)
+            result += "0";
+        result += std::to_string(date.getMonth());
+
+        return result;
+    }
 };
 
 #endif //GAMIFY_LIFE_WORKDAYUTIL_HPP

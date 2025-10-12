@@ -6,6 +6,7 @@
 
 #include "view/not_curses/windows/ProfileWindow.hpp"
 #include "../../../include/view/not_curses/windows/TaskWindow.hpp"
+#include "view/not_curses/windows/StatWindow.hpp"
 #include "view/not_curses/windows/StreakWindow.hpp"
 
 void NotCursesFrontend::init(const std::shared_ptr<AppController>& app_controller) {
@@ -13,20 +14,10 @@ void NotCursesFrontend::init(const std::shared_ptr<AppController>& app_controlle
     main_plane = instance->getStdPlane();
     window_manager = std::make_shared<WindowManager>(main_plane);
 
-    WindowHandle window = std::make_shared<ProfileWindow>(app_controller->profile_controller, main_plane);
-    windows.push_back(window);
-    window_manager->addWindow(window);
-
-    window = std::make_shared<TaskWindow>(app_controller->task_controller, app_controller->profile_controller, main_plane);
-    windows.push_back(window);
-    window_manager->addWindow(window);
-
-    window = std::make_shared<StreakWindow>(app_controller->profile_controller, main_plane);
-    windows.push_back(window);
-    window_manager->addWindow(window);
-
-    createWindow(glm::ivec2(5, 5), BOTTOM_RIGHT);
-
+    createWindow<ProfileWindow>(app_controller->profile_controller, main_plane);
+    createWindow<TaskWindow>(app_controller->task_controller, app_controller->profile_controller, main_plane);
+    createWindow<StreakWindow>(app_controller->profile_controller, main_plane);
+    createWindow<StatWindow>(app_controller->profile_controller, main_plane);
 
     instance->render();
 }
@@ -68,11 +59,4 @@ void NotCursesFrontend::handleInput() {
 
 void NotCursesFrontend::stop() {
     instance->destroy();
-}
-
-void NotCursesFrontend::createWindow(glm::ivec2 min_extent, WindowAlignment alignment) {
-    auto window = std::make_shared<NotCursesWindow>(main_plane, min_extent, alignment);
-
-    windows.push_back(window);
-    window_manager->addWindow(window);
 }
