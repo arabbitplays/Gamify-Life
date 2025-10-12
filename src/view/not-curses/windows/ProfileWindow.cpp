@@ -30,6 +30,8 @@ void ProfileWindow::draw() {
     glm::ivec2 content_size = content_plane->getExtent();
     glm::ivec2 table_size = glm::ivec2(content_size.x, 20);
     done_tasks_table->drawToPlane(content_plane, glm::ivec2(0, 3), table_size);
+
+    drawControlTips({"h - \u2190", "l - \u2192"});
 }
 
 void ProfileWindow::handleInput(ncinput input) {

@@ -35,6 +35,7 @@ void TaskWindow::draw() {
         tasks_table->drawToPlane(content_plane, glm::ivec2(0), table_size);
     }
 
+    drawControlTips({"i - insert", "j - \u2193", "k - \u2191"});
 }
 
 void TaskWindow::handleInput(ncinput input) {

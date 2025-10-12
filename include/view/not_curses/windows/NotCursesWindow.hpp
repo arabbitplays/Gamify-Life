@@ -5,6 +5,7 @@
 #ifndef GAMIFY_LIFE_WINDOW_HPP
 #define GAMIFY_LIFE_WINDOW_HPP
 #include <memory>
+#include <vector>
 #include <glm/vec2.hpp>
 
 #include "view/not_curses/NotCursesPlane.hpp"
@@ -41,6 +42,8 @@ public:
 protected:
     static PlaneHandle createPlane(const PlaneHandle & parent_plane, const glm::ivec2 extent);
     void setMargin(glm::ivec2 new_margin);
+
+    void drawControlTips(const std::vector<std::string> &tips) const;
 
     PlaneHandle parent_plane;
     PlaneHandle border_plane;

@@ -56,3 +56,18 @@ void NotCursesWindow::setMargin(glm::ivec2 new_margin) {
     margin = new_margin;
     content_plane->move(glm::ivec2(1, 1) + margin);
 }
+
+void NotCursesWindow::drawControlTips(const std::vector<std::string> &tips) const {
+    if (tips.empty())
+        return;
+
+    uint32_t longest_tipp_len = tips.at(0).size();
+    for (uint32_t i = 1; i < tips.size(); i++) {
+        longest_tipp_len = std::max(longest_tipp_len, static_cast<uint32_t>(tips.at(i).size()));
+    }
+
+    const glm::ivec2 bottom_right_pos = content_plane->getExtent();
+    for (uint32_t i = 0; i < tips.size(); i++) {
+        content_plane->writeText(bottom_right_pos - glm::ivec2(longest_tipp_len, tips.size() - i), tips.at(i));
+    }
+}
