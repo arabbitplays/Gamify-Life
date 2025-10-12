@@ -5,6 +5,7 @@
 #include "../../include/model/Profile.hpp"
 
 #include <iostream>
+#include <ranges>
 
 Profile::Profile(std::string name) : name(std::move(name)) {
 }
@@ -25,17 +26,26 @@ void Profile::addDoneTask(const TaskHandle &task, const Date &date) {
     }
 }
 
-void Profile::addStreak(const StreakHandle &streak) {
-    std::string streak_name = streak->getName();
-    if (!streaks.contains(streak->getName())) {
-        streaks[streak->getName()] = streak;
+void Profile::addStreaks(const std::vector<StreakHandle> &new_streaks) {
+    for (const auto& streak : new_streaks) {
+        std::string streak_name = streak->getName();
+        if (!streaks.contains(streak->getName())) {
+            streaks[streak->getName()] = streak;
+        }
     }
 }
 
-std::vector<TaskHandle> Profile::getDoneTasksToday() {
-    Date today = Date::createToday();
-    if (done_tasks.contains(today)) {
-        return done_tasks[today];
+std::vector<StreakHandle> Profile::getStreaks() const {
+    std::vector<StreakHandle> result;
+    for (const auto &streak: streaks | std::views::values) {
+        result.push_back(streak);
+    }
+    return result;
+}
+
+std::vector<TaskHandle> Profile::getDoneTasksAtDate(const Date& date) {
+    if (done_tasks.contains(date)) {
+        return done_tasks[date];
     }
     return {};
 }

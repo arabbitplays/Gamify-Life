@@ -8,15 +8,16 @@
 #include "ITaskRepository.hpp"
 #include "model/Profile.hpp"
 
-
 class ProfileController {
 public:
     ProfileController(const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_repo);
+    void loadProfile(const std::string &name);
 
     std::string getName() const;
     void addDoneTaskToday(const std::string &task_name) const;
-    float getTotalScoreToday() const;
-    std::vector<TaskHandle> getTasksDoneToday() const;
+
+    float getTotalScoreAtDate(const Date& date) const;
+    std::vector<TaskHandle> getTasksDoneAtDate(const Date& date) const;
 
     std::vector<StreakHandle> getStreaks() const;
 

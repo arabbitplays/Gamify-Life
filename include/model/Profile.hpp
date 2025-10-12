@@ -20,9 +20,11 @@ public:
 
     void addDoneTaskToday(const TaskHandle &task);
     void addDoneTask(const TaskHandle& task, const Date& date);
-    void addStreak(const StreakHandle& streak);
 
-    std::vector<TaskHandle> getDoneTasksToday();
+    void addStreaks(const std::vector<StreakHandle> & new_streaks);
+    std::vector<StreakHandle> getStreaks() const;
+
+    std::vector<TaskHandle> getDoneTasksAtDate(const Date& date);
     std::unordered_map<Date, std::vector<TaskHandle>> getDoneTasks();
 
     std::string getName();

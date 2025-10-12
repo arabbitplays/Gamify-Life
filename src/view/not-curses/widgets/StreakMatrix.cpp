@@ -42,12 +42,23 @@ void StreakMatrix::drawToPlane(const PlaneHandle &plane, const glm::ivec2 pos, c
         bool is_perfect_day = true;
         for (uint32_t streak_idx = 0; streak_idx < streaks.size(); streak_idx++) {
             auto& checked_dates = streak_cache.at(streak_idx);
-            bool checked = std::find(checked_dates.begin(), checked_dates.end(), represented_date) != checked_dates.end();
-            if (checked) {
-                drawCirleOfMatrix(plane, pos, streak_idx, day_idx, SELECTED, max_name_size);
-            } else {
-                drawCirleOfMatrix(plane, pos, streak_idx, day_idx, DEFAULT, max_name_size);
+            const bool checked = std::find(checked_dates.begin(), checked_dates.end(), represented_date) != checked_dates.end();
+
+            Color circle_color = DEFAULT;
+            if (checked)
+                circle_color = SELECTED;
+            else
                 is_perfect_day = false;
+            drawCirleOfMatrix(plane, pos, streak_idx, day_idx, circle_color, max_name_size);
+
+            // print names
+            if (represented_date == today) {
+                Color name_color = DEFAULT;
+                if (is_perfect_day)
+                    name_color = GOLD;
+                else if (checked)
+                    name_color = SELECTED;
+                printName(plane, pos, streaks.at(streak_idx)->getName(), max_name_size,  streak_idx, name_color);
             }
         }
 
@@ -55,25 +66,7 @@ void StreakMatrix::drawToPlane(const PlaneHandle &plane, const glm::ivec2 pos, c
             drawPerfectDay(plane, pos, streaks.size(), day_idx, max_name_size);
         }
 
-        // TODO make this cleaner
-        if (represented_date == today) {
-            // print names
-            for (uint32_t streak_idx = 0; streak_idx < streaks.size(); streak_idx++) {
-                if (is_perfect_day) {
-                    printName(plane, pos, streaks.at(streak_idx)->getName(), max_name_size,  streak_idx, GOLD);
-                } else {
-                    auto& checked_dates = streak_cache.at(streak_idx);
-                    bool checked = std::find(checked_dates.begin(), checked_dates.end(), represented_date) != checked_dates.end();
-                    if (checked) {
-                        printName(plane, pos, streaks.at(streak_idx)->getName(), max_name_size,  streak_idx, SELECTED);
-                    } else {
-                        printName(plane, pos, streaks.at(streak_idx)->getName(), max_name_size,  streak_idx, DEFAULT);
-                    }
-                }
-            }
-        }
-
-        represented_date = represented_date.createNext(1);
+        represented_date = represented_date.createNext();
     }
 }
 

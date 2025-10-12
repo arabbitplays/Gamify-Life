@@ -13,12 +13,13 @@ class ProfileWindow : public BorderWindow {
 public:
     ProfileWindow(const std::shared_ptr<ProfileController> &profile_controller, const PlaneHandle &parent_plane);
     void draw() override;
+    void handleInput(ncinput input) override;
 
 private:
     std::shared_ptr<ProfileController> profile_controller;
 
     SelectionTableHandle done_tasks_table;
-
+    Date displayed_date;
 };
 
 
