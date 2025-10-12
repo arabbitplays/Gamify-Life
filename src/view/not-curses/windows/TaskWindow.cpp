@@ -20,6 +20,11 @@ TaskWindow::TaskWindow(const std::shared_ptr<TaskController> &task_controller,
 }
 
 void TaskWindow::draw() {
+    if (border_plane->getExtent().x > 30)
+        name = TASK_WINDOW_NAME;
+    else
+        name = TASK_WINDOW_SHORT_NAME;
+
     BorderWindow::draw();
 
     tasks_table->clear();

@@ -17,7 +17,10 @@ ProfileWindow::ProfileWindow(const std::shared_ptr<ProfileController> &profile_c
 }
 
 void ProfileWindow::draw() {
-    name = "Profile: " + profile_controller->getName();
+    if (border_plane->getExtent().x > 30)
+        name = "Profile: " + profile_controller->getName();
+    else
+        name = profile_controller->getName();
 
     BorderWindow::draw();
     uint32_t displayed_total_score = std::floor(profile_controller->getTotalScoreAtDate(displayed_date));

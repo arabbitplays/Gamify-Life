@@ -5,7 +5,7 @@
 #include "view/not_curses/windows/StreakWindow.hpp"
 
 StreakWindow::StreakWindow(const std::shared_ptr<ProfileController> &profile_controller,
-    const PlaneHandle &parent_plane) : BorderWindow("Streaks:", parent_plane, glm::ivec2(10, 10), BOTTOM_LEFT), profile_controller(profile_controller) {
+    const PlaneHandle &parent_plane) : BorderWindow("Streaks", parent_plane, glm::ivec2(10, 10), BOTTOM_LEFT), profile_controller(profile_controller) {
     setMargin(glm::ivec2(2, 1));
     streak_matrix = std::make_shared<StreakMatrix>();
 }

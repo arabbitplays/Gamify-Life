@@ -11,6 +11,7 @@
 
 class TaskWindow : public BorderWindow {
     static constexpr std::string TASK_WINDOW_NAME = "Tasks Available";
+    static constexpr std::string TASK_WINDOW_SHORT_NAME = "Tasks";
 
 public:
     TaskWindow(const std::shared_ptr<TaskController> &task_controller,
