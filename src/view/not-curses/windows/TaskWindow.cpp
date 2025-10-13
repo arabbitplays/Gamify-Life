@@ -12,7 +12,7 @@
 
 TaskWindow::TaskWindow(const std::shared_ptr<TaskController> &task_controller,
             const std::shared_ptr<ProfileController> &profile_controller, const PlaneHandle &parent_plane)
-            : BorderWindow(TASK_WINDOW_NAME, parent_plane, glm::ivec2(10, 10), TOP_RIGHT),
+            : BorderWindow(TASK_WINDOW_NAME, parent_plane, glm::ivec2(16, 10), TOP_RIGHT, TASK_WINDOW),
             task_controller(task_controller), profile_controller(profile_controller) {
 
     setMargin(glm::ivec2(2, 1));

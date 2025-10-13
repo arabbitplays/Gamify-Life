@@ -9,7 +9,7 @@
 #include "view/not_curses/widgets/WidgetUtil.hpp"
 
 ProfileWindow::ProfileWindow(const std::shared_ptr<ProfileController> &profile_controller, const PlaneHandle &parent_plane)
-    : BorderWindow("Profile", parent_plane, glm::ivec2(10, 10), TOP_LEFT), profile_controller(profile_controller) {
+    : BorderWindow("Profile", parent_plane, glm::ivec2(16, 10), TOP_LEFT, PROFILE_WINDOW), profile_controller(profile_controller) {
 
     setMargin(glm::ivec2(2, 1));
     done_tasks_table = std::make_shared<SelectionTable>(2);
@@ -34,7 +34,7 @@ void ProfileWindow::draw() {
     glm::ivec2 table_size = glm::ivec2(content_size.x, 20);
     done_tasks_table->drawToPlane(content_plane, glm::ivec2(0, 3), table_size);
 
-    drawControlTips({"h - \u2190", "l - \u2192"});
+    drawControlTips({"q - quit", "h - \u2190", "l - \u2192"});
 }
 
 void ProfileWindow::handleInput(ncinput input) {

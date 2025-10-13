@@ -7,7 +7,7 @@
 #include "view/not_curses/widgets/WidgetUtil.hpp"
 
 StatWindow::StatWindow(const std::shared_ptr<ProfileController>& profile_controller, const PlaneHandle& parent_plane)
-        : BorderWindow("Stats", parent_plane, glm::ivec2(10, 10), BOTTOM_RIGHT),
+        : BorderWindow("Stats", parent_plane, glm::ivec2(16, 10), BOTTOM_RIGHT, STATS_WINDOW),
         profile_controller(profile_controller) {
 
         setMargin(glm::ivec2(2, 1));
@@ -21,6 +21,6 @@ void StatWindow::draw() {
 
         total_score_histogram->clear();
         WidgetUtil::fillHistogramWithProfile(total_score_histogram, profile_controller, histogram_size);
-        total_score_histogram->drawToPlane(content_plane, histogram_size);
+        total_score_histogram->drawToPlane(content_plane, glm::ivec2(0, 0), histogram_size);
 
 }

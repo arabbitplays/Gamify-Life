@@ -68,9 +68,27 @@ void WindowManager::showAll() const {
 }
 
 bool WindowManager::screenExtentIsBigEnough(const glm::ivec2 screen_extent) const {
+    std::vector<WindowHandle> windows_by_alignment(4);
     auto min_screen_extent = glm::ivec2(0);
     for (auto& window : windows) {
-        min_screen_extent += window->getMinExtent();
+        if (window->getAlignment() == TOP_LEFT)
+            windows_by_alignment[0] = window;
+        else if (window->getAlignment() == TOP_RIGHT)
+            windows_by_alignment[1] = window;
+        else if (window->getAlignment() == BOTTOM_LEFT)
+            windows_by_alignment[2] = window;
+        else if (window->getAlignment() == BOTTOM_RIGHT)
+            windows_by_alignment[3] = window;
     }
+
+    min_screen_extent.x = std::max(
+        windows_by_alignment[0]->getMinExtent().x + windows_by_alignment[1]->getMinExtent().x,
+        windows_by_alignment[2]->getMinExtent().x + windows_by_alignment[3]->getMinExtent().x
+        );
+
+    min_screen_extent.y = std::max(
+        windows_by_alignment[0]->getMinExtent().y + windows_by_alignment[2]->getMinExtent().y,
+        windows_by_alignment[1]->getMinExtent().y + windows_by_alignment[3]->getMinExtent().y
+        );
     return min_screen_extent.x <= screen_extent.x && min_screen_extent.y <= screen_extent.y;
 }

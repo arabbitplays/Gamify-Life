@@ -8,11 +8,12 @@
 
 class BorderWindow : public NotCursesWindow {
 public:
-    BorderWindow(const std::string& name, const PlaneHandle &parent_plane, glm::ivec2 min_extent, WindowAlignment alignment);
+    BorderWindow(const std::string& name, const PlaneHandle &parent_plane, glm::ivec2 min_extent, WindowAlignment alignment, Color border_color = DEFAULT);
     void draw() override;
 
 protected:
     std::string name;
+    Color border_color;
     bool active = false;
 
 private:
