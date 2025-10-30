@@ -1,12 +1,17 @@
 name: Oschdi
 done:
   - date:
-      day: 13
+      day: 19
       month: 10
       year: 2025
     tasks:
-      - Spanish
-      - Running
+      - Stretching
+  - date:
+      day: 28
+      month: 10
+      year: 2025
+    tasks:
+      - Stretching
   - date:
       day: 5
       month: 10
