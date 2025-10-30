@@ -11,6 +11,7 @@ incdirs = [
 ]
 
 yaml = dependency('yaml-cpp')
+libpq = dependency('libpqxx')
 curses = dependency('notcurses', required: true)
 glm = dependency('glm', fallback : ['glm', 'glm_dep'], version: ['>=0.9.9.8'])
 
@@ -27,6 +28,7 @@ exe = executable(
     sources: src,
     dependencies: [
         yaml,
+        libpq,
         curses,
         glm,
     ],

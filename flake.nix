@@ -28,6 +28,7 @@
         yaml-cpp
         notcurses
         glm
+        libpqxx
       ];
 
       shellHook = ''

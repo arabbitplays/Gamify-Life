@@ -9,6 +9,7 @@
 #include "controller/ProfileController.hpp"
 #include "controller/TaskController.hpp"
 #include "../persistence/in_memory/InMemoryProfileGateway.hpp"
+#include "persistence/postgres/PostgresProfileGateway.hpp"
 #include "persistence/yaml/YamlProfileGateway.hpp"
 #include "persistence/yaml/YamlTaskRepository.hpp"
 
@@ -18,7 +19,8 @@ public:
     AppController() {
         task_repo = std::make_shared<YamlTaskRepository>("../resources/tasks.yaml");
         task_repo->loadTasks();
-        profile_gateway = std::make_shared<YamlProfileGateway>("../resources/profile.yaml", task_repo);
+        //profile_gateway = std::make_shared<YamlProfileGateway>("../resources/profile.yaml", task_repo);
+        profile_gateway = std::make_shared<PostgresProfileGateway>();
 
         task_controller = std::make_shared<TaskController>(task_repo, profile_gateway);
         profile_controller = std::make_shared<ProfileController>(task_repo, profile_gateway);

@@ -13,6 +13,9 @@ ProfileController::ProfileController(const std::shared_ptr<ITaskRepository> &tas
 
 void ProfileController::loadProfile(const std::string &name) {
     profile = profile_gateway->loadProfile(name);
+    if (profile == nullptr) {
+        throw std::runtime_error("Profile '" + name + "' could not be loaded");
+    }
     profile->addStreaks(StreakFactory::createStreaksForProfile(profile));
 }
 
