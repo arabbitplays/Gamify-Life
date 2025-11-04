@@ -11,7 +11,8 @@
 class ProfileController {
 public:
     ProfileController(const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_repo);
-    void loadProfile(const std::string &name);
+
+    ProfileHandle getProfile();
 
     std::string getName() const;
     void addDoneTaskToday(const std::string &task_name) const;
@@ -22,6 +23,8 @@ public:
     std::vector<StreakHandle> getStreaks() const;
 
 private:
+    void loadProfile(const std::string &name);
+
     ProfileHandle profile;
 
     std::shared_ptr<ITaskRepository> task_repo;

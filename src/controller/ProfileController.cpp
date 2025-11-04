@@ -11,6 +11,10 @@ ProfileController::ProfileController(const std::shared_ptr<ITaskRepository> &tas
     loadProfile("Oschdi");
 }
 
+ProfileHandle ProfileController::getProfile() {
+    return profile;
+}
+
 void ProfileController::loadProfile(const std::string &name) {
     profile = profile_gateway->loadProfile(name);
     if (profile == nullptr) {

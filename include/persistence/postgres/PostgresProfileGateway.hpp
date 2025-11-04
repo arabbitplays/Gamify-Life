@@ -7,9 +7,11 @@
 #include "controller/IProfileGateway.hpp"
 #include <pqxx/pqxx>
 
+#include "controller/ITaskRepository.hpp"
+
 class PostgresProfileGateway : public IProfileGateway {
 public:
-    PostgresProfileGateway();
+    explicit PostgresProfileGateway(const std::shared_ptr<ITaskRepository> &task_repository);
 
     ProfileHandle loadProfile(std::string name) override;
     ProfileHandle createProfile(std::string name) override;
@@ -17,6 +19,8 @@ public:
 
 public:
     pqxx::connection connection;
+
+    std::shared_ptr<ITaskRepository> task_repository;
 };
 
 
