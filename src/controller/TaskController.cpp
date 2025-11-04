@@ -5,7 +5,6 @@
 #include "controller/TaskController.hpp"
 
 TaskController::TaskController(const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_gateway) : task_repo(task_repo), profile_gateway(profile_gateway) {
-    task_repo->loadTasks();
 }
 
 std::vector<TaskHandle> TaskController::getAvailableTasks() const {

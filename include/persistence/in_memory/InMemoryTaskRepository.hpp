@@ -12,9 +12,9 @@
 
 class InMemoryTaskRepository : public ITaskRepository {
 public:
-    InMemoryTaskRepository() = default;
+    InMemoryTaskRepository();
 
-    void loadTasks() override;
+    void loadTasks();
     void addTask(const TaskHandle& task) override;
     std::vector<TaskHandle> getTasks() override;
     TaskHandle getTaskByName(const std::string &task_name) override;

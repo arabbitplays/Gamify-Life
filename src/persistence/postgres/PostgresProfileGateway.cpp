@@ -16,13 +16,9 @@ ProfileHandle PostgresProfileGateway::loadProfile(std::string name) {
         pqxx::work W(C);
 
         const std::string sql = R"(
-            CREATE TABLE IF NOT EXISTS profiles (
-                id SERIAL PRIMARY KEY,
-                data JSONB NOT NULL
-            );
+
         )";
 
-        W.exec(sql);
         W.commit();
 
         W.commit();  // commit transaction

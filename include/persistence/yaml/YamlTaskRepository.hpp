@@ -17,7 +17,7 @@ private:
 public:
     explicit YamlTaskRepository(const std::string &file_path);
 
-    void loadTasks() override;
+    void loadTasks();
     void addTask(const TaskHandle& task) override;
     std::vector<TaskHandle> getTasks() override;
     TaskHandle getTaskByName(const std::string &task_name) override;

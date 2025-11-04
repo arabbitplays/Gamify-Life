@@ -7,7 +7,7 @@
 #include <fstream>
 
 YamlTaskRepository::YamlTaskRepository(const std::string &file_path) : file_path(file_path) {
-
+    loadTasks();
 }
 
 void YamlTaskRepository::loadTasks() {

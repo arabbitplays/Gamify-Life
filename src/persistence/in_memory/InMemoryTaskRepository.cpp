@@ -5,6 +5,10 @@
 
 #include "../../../include/persistence/in_memory/InMemoryTaskRepository.hpp"
 
+InMemoryTaskRepository::InMemoryTaskRepository() {
+    loadTasks();
+}
+
 void InMemoryTaskRepository::loadTasks() {
     const auto task1 = std::make_shared<Task>("Stretching", 5, "Sport");
     const auto task2 = std::make_shared<Task>("Running", 10, "Sport");

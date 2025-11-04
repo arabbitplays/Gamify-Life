@@ -25,6 +25,12 @@ done:
     tasks:
       - Stretching
   - date:
+      day: 4
+      month: 11
+      year: 2025
+    tasks:
+      - Spanish
+  - date:
       day: 7
       month: 10
       year: 2025
