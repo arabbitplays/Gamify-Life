@@ -5,23 +5,23 @@
 #include "persistence/postgres/PostgresProfileGateway.hpp"
 
 
+PostgresProfileGateway::PostgresProfileGateway() : connection("dbname=gamify-life user=postgres host=/var/run/postgresql")
+{
+    if (!connection.is_open()) {
+        throw std::runtime_error("Can't connect to postgres db");
+    }
+}
+
 ProfileHandle PostgresProfileGateway::loadProfile(std::string name) {
     try {
-        pqxx::connection C("dbname=gamify-life user=postgres host=/var/run/postgresql");
-
-        if (!C.is_open()) {
-            throw std::runtime_error("Can't connect to postgres db");
-        }
-
-        pqxx::work W(C);
+        pqxx::work work(connection);
 
         const std::string sql = R"(
 
         )";
 
-        W.commit();
+        work.commit();
 
-        W.commit();  // commit transaction
     } catch (const std::exception &e) {
         fprintf(stderr, "%s", e.what());
         return nullptr;
@@ -30,7 +30,10 @@ ProfileHandle PostgresProfileGateway::loadProfile(std::string name) {
     return nullptr;
 }
 
-bool PostgresProfileGateway::storeProfile(ProfileHandle) {
-    return false;
+ProfileHandle PostgresProfileGateway::createProfile(std::string name) {
+    return nullptr;
+}
+
+void PostgresProfileGateway::addDoneTaskToProfile(std::string profile_name, Date date, TaskHandle task_handle) {
 }
 

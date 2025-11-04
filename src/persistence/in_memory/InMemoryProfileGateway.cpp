@@ -6,12 +6,15 @@
 
 ProfileHandle InMemoryProfileGateway::loadProfile(std::string name) {
     if (profile == nullptr) {
-        profile = std::make_shared<Profile>(name);
+        profile = createProfile(name);
     }
     return profile;
 }
 
-bool InMemoryProfileGateway::storeProfile(ProfileHandle) {
-    // Intentional empty
-    return true;
+ProfileHandle InMemoryProfileGateway::createProfile(std::string name) {
+    return std::make_shared<Profile>(name);
+}
+
+void InMemoryProfileGateway::addDoneTaskToProfile(std::string profile_name, Date date, TaskHandle task_handle) {
+    // intentionally empty
 }

@@ -21,7 +21,7 @@ public:
         //task_repo = std::make_shared<YamlTaskRepository>("../resources/tasks.yaml");
         task_repo = std::make_shared<PostgresTaskRepository>();
 
-        profile_gateway = std::make_shared<YamlProfileGateway>("../resources/profile.yaml", task_repo);
+        profile_gateway = std::make_shared<YamlProfileGateway>("../resources", task_repo);
         //profile_gateway = std::make_shared<PostgresProfileGateway>();
 
         task_controller = std::make_shared<TaskController>(task_repo, profile_gateway);

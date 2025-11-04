@@ -42,13 +42,14 @@ private:
     static constexpr std::string TASKS_NAMES_KEY = "tasks";
 
 public:
-    YamlProfileGateway(const std::string &file_path, const std::shared_ptr<ITaskRepository>& task_repo);
+    YamlProfileGateway(const std::string &profile_dir_path, const std::shared_ptr<ITaskRepository>& task_repo);
 
     ProfileHandle loadProfile(std::string name) override;
-    bool storeProfile(ProfileHandle) override;
+    ProfileHandle createProfile(std::string name) override;
+    void addDoneTaskToProfile(std::string profile_name, Date date, TaskHandle task_handle) override;
 
 private:
-    std::string file_path;
+    std::string profile_dir_path;
     std::shared_ptr<ITaskRepository> task_repository;
 };
 
