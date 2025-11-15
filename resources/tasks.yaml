@@ -5,15 +5,15 @@ tasks:
   - name: "Running"
     score: 10
     streak: "Sport"
+  - name: "Bouldering"
+    score: 15
+    streak: "Sport"
   - name: "Spanish"
     score: 10
     streak: "Language"
   - name: "Practice guitar"
     score: 10
     streak: "Music"
-  - name: "Bouldering"
-    score: 15
-    streak: "Sport"
   - name: "Water plants"
     score: 5
     streak: "Chores"
