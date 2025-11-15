@@ -18,7 +18,7 @@ YamlProfileGateway::YamlProfileGateway(YAML::Node persistence_config_node, const
 }
 
 ProfileHandle YamlProfileGateway::loadProfile(const std::string name) {
-    const std::string file_name = profile_dir_path + "/" + name + ".yaml";
+    const std::string file_name = profile_dir_path + "/" + std::format(PROFILE_FILE_NAME, name);
     try {
         YAML::Node profile_node = YAML::LoadFile(file_name);
 
@@ -36,7 +36,7 @@ ProfileHandle YamlProfileGateway::loadProfile(const std::string name) {
 
             auto date = date_node[DATE_KEY].as<Date>();
             for (const auto& name_node : date_node[TASKS_NAMES_KEY]) {
-                std::string task_name = name_node.as<std::string>();
+                auto task_name = name_node.as<std::string>();
                 TaskHandle task = task_repository->getTaskByName(task_name);
                 if (task == nullptr) {
                     fprintf(stderr, "Task %s doesnt exist!\n", task_name.c_str());
@@ -53,20 +53,20 @@ ProfileHandle YamlProfileGateway::loadProfile(const std::string name) {
 }
 
 ProfileHandle YamlProfileGateway::createProfile(std::string name) {
-    ProfileHandle profile = std::make_shared<Profile>(name);
+    auto profile = std::make_shared<Profile>(name);
 
     YAML::Node profile_node;
     profile_node[NAME_KEY] = profile->getName();
     profile_node[DONE_TASKS_KEY] = YAML::Node(YAML::NodeType::Sequence);
 
-    std::ofstream fout(profile_dir_path + "/" + profile->getName() + ".yaml");
+    std::ofstream fout(profile_dir_path + "/" + std::format(PROFILE_FILE_NAME, name));
     fout << profile_node;
 
     return profile;
 }
 
 void YamlProfileGateway::addDoneTaskToProfile(std::string profile_name, Date insert_date, TaskHandle task) {
-    std::string file_path = profile_dir_path + "/" + profile_name + "_profile.yaml";
+    std::string file_path = profile_dir_path + "/" + std::format(PROFILE_FILE_NAME, profile_name);
     try {
         YAML::Node profile_node = YAML::LoadFile(file_path);
 

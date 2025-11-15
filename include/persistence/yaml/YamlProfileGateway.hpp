@@ -31,6 +31,7 @@ namespace YAML {
 } // namespace YAML
 
 class YamlProfileGateway final : public IProfileGateway {
+    static constexpr std::string_view PROFILE_FILE_NAME = "{}.yaml";
     static constexpr std::string NAME_KEY = "name";
     static constexpr std::string DONE_TASKS_KEY = "done";
     static constexpr std::string DATE_KEY = "date";

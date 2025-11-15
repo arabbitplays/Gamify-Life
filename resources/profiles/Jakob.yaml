@@ -1,44 +1,320 @@
 name: Jakob
 done:
   - date:
-      day: 19
+      day: 1
       month: 10
       year: 2025
     tasks:
-      - Stretching
+    - Clean windows
+    - Vacuuming
   - date:
-      day: 28
+      day: 2
+      month: 10
+      year: 2025
+    tasks: []
+  - date:
+      day: 3
       month: 10
       year: 2025
     tasks:
-      - Stretching
+    - Water plants
+    - Stretching
+    - Vacuuming
+  - date:
+      day: 4
+      month: 10
+      year: 2025
+    tasks:
+    - Water plants
   - date:
       day: 5
       month: 10
       year: 2025
     tasks:
-      - Stretching
+    - Clean windows
+    - Running
+    - Spanish
   - date:
       day: 6
       month: 10
       year: 2025
     tasks:
-      - Stretching
+    - Practice guitar
+    - Vacuuming
   - date:
       day: 7
       month: 10
       year: 2025
     tasks:
-      - Stretching
+    - Stretching
+    - Clean windows
+    - Practice guitar
+  - date:
+      day: 8
+      month: 10
+      year: 2025
+    tasks:
+    - Practice guitar
+    - Water plants
+  - date:
+      day: 9
+      month: 10
+      year: 2025
+    tasks:
+    - Practice guitar
+    - Water plants
+    - Vacuuming
+  - date:
+      day: 10
+      month: 10
+      year: 2025
+    tasks:
+    - Stretching
+    - Bouldering
+    - Practice guitar
+    - Running
+  - date:
+      day: 11
+      month: 10
+      year: 2025
+    tasks:
+    - Running
+    - Bouldering
+    - Spanish
   - date:
       day: 12
       month: 10
       year: 2025
     tasks:
-      - Stretching
+    - Spanish
+    - Running
+    - Bouldering
+  - date:
+      day: 13
+      month: 10
+      year: 2025
+    tasks:
+    - Water plants
+    - Running
+    - Spanish
+  - date:
+      day: 14
+      month: 10
+      year: 2025
+    tasks:
+    - Water plants
+  - date:
+      day: 15
+      month: 10
+      year: 2025
+    tasks:
+    - Vacuuming
+    - Bouldering
+    - Clean windows
+    - Spanish
+  - date:
+      day: 16
+      month: 10
+      year: 2025
+    tasks:
+    - Vacuuming
+  - date:
+      day: 17
+      month: 10
+      year: 2025
+    tasks:
+    - Bouldering
+  - date:
+      day: 18
+      month: 10
+      year: 2025
+    tasks: []
+  - date:
+      day: 19
+      month: 10
+      year: 2025
+    tasks:
+    - Running
+  - date:
+      day: 20
+      month: 10
+      year: 2025
+    tasks:
+    - Spanish
+  - date:
+      day: 21
+      month: 10
+      year: 2025
+    tasks:
+    - Stretching
+    - Clean windows
+    - Practice guitar
+  - date:
+      day: 22
+      month: 10
+      year: 2025
+    tasks:
+    - Vacuuming
+    - Practice guitar
+    - Bouldering
+    - Stretching
+  - date:
+      day: 23
+      month: 10
+      year: 2025
+    tasks:
+    - Vacuuming
+    - Running
+    - Practice guitar
+  - date:
+      day: 24
+      month: 10
+      year: 2025
+    tasks:
+    - Spanish
+    - Clean windows
+    - Vacuuming
+  - date:
+      day: 25
+      month: 10
+      year: 2025
+    tasks:
+    - Bouldering
+  - date:
+      day: 26
+      month: 10
+      year: 2025
+    tasks: []
+  - date:
+      day: 27
+      month: 10
+      year: 2025
+    tasks:
+    - Stretching
+    - Spanish
+    - Practice guitar
+  - date:
+      day: 28
+      month: 10
+      year: 2025
+    tasks:
+    - Stretching
+    - Clean windows
+    - Bouldering
+    - Spanish
+  - date:
+      day: 29
+      month: 10
+      year: 2025
+    tasks:
+    - Bouldering
+  - date:
+      day: 30
+      month: 10
+      year: 2025
+    tasks:
+    - Spanish
+  - date:
+      day: 31
+      month: 10
+      year: 2025
+    tasks:
+    - Stretching
+  - date:
+      day: 1
+      month: 11
+      year: 2025
+    tasks:
+    - Spanish
+    - Practice guitar
+  - date:
+      day: 2
+      month: 11
+      year: 2025
+    tasks:
+    - Water plants
+    - Clean windows
+    - Stretching
+    - Spanish
+  - date:
+      day: 3
+      month: 11
+      year: 2025
+    tasks: []
   - date:
       day: 4
       month: 11
       year: 2025
     tasks:
-      - Spanish
+    - Practice guitar
+    - Spanish
+  - date:
+      day: 5
+      month: 11
+      year: 2025
+    tasks:
+    - Running
+    - Bouldering
+  - date:
+      day: 6
+      month: 11
+      year: 2025
+    tasks: []
+  - date:
+      day: 7
+      month: 11
+      year: 2025
+    tasks:
+    - Vacuuming
+    - Bouldering
+    - Clean windows
+    - Water plants
+  - date:
+      day: 8
+      month: 11
+      year: 2025
+    tasks:
+    - Vacuuming
+  - date:
+      day: 9
+      month: 11
+      year: 2025
+    tasks:
+    - Practice guitar
+    - Running
+    - Clean windows
+  - date:
+      day: 10
+      month: 11
+      year: 2025
+    tasks:
+    - Spanish
+    - Vacuuming
+    - Practice guitar
+    - Running
+  - date:
+      day: 11
+      month: 11
+      year: 2025
+    tasks:
+    - Running
+    - Practice guitar
+    - Bouldering
+  - date:
+      day: 12
+      month: 11
+      year: 2025
+    tasks:
+    - Water plants
+    - Clean windows
+  - date:
+      day: 13
+      month: 11
+      year: 2025
+    tasks: []
+  - date:
+      day: 14
+      month: 11
+      year: 2025
+    tasks:
+    - Clean windows
