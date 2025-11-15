@@ -1,0 +1,4 @@
+profile_name: "Jakob"
+persistence:
+  type: yaml
+  dir: "../resources"

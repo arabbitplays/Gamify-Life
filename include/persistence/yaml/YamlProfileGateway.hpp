@@ -1,7 +1,3 @@
-//
-// Created by oschdi on 11.10.25.
-//
-
 #ifndef GAMIFY_LIFE_YAMLPROFILEGATEWAY_HPP
 #define GAMIFY_LIFE_YAMLPROFILEGATEWAY_HPP
 #include <yaml-cpp/yaml.h>
@@ -34,15 +30,14 @@ namespace YAML {
     };
 } // namespace YAML
 
-class YamlProfileGateway : public IProfileGateway {
-private:
+class YamlProfileGateway final : public IProfileGateway {
     static constexpr std::string NAME_KEY = "name";
     static constexpr std::string DONE_TASKS_KEY = "done";
     static constexpr std::string DATE_KEY = "date";
     static constexpr std::string TASKS_NAMES_KEY = "tasks";
 
 public:
-    YamlProfileGateway(const std::string &profile_dir_path, const std::shared_ptr<ITaskRepository>& task_repo);
+    YamlProfileGateway(YAML::Node persistence_config_node, const std::shared_ptr<ITaskRepository>& task_repo);
 
     ProfileHandle loadProfile(std::string name) override;
     ProfileHandle createProfile(std::string name) override;

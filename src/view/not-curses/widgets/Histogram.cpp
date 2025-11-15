@@ -5,9 +5,12 @@
 #include "../../../../include/view/not_curses/widgets/Histogram.hpp"
 
 void Histogram::drawToPlane(const PlaneHandle &plane, glm::ivec2 pos, glm::ivec2 size) const {
+    if (datapoints.size() == 0) {
+        return;
+    }
     const uint32_t max_bar_height = size.y - X_AXIS_HEIGHT;
 
-    float max_value = 0;
+    float max_value = 1;
     for (const auto& [key, value] : datapoints) {
         max_value = std::max(value, max_value);
     }
@@ -35,10 +38,10 @@ void Histogram::drawToPlane(const PlaneHandle &plane, glm::ivec2 pos, glm::ivec2
 void Histogram::drawHistogramBar(const PlaneHandle& plane, glm::ivec2 pos, float bar_height) {
     double full_segment_count;
     const double residual_segment_value = std::modf(bar_height, &full_segment_count);
-
     for (uint32_t i = 0; i < full_segment_count; i++) {
         plane->writeText(pos - glm::ivec2(0, i), "\u28FF", STATS_WINDOW);
     }
+
     plane->writeText(pos - glm::ivec2(0, full_segment_count), getResidualSegmentCharacter(residual_segment_value), STATS_WINDOW);
 }
 

@@ -1,18 +1,24 @@
-//
-// Created by oschdi on 11.10.25.
-//
-
 #include "persistence/yaml/YamlProfileGateway.hpp"
 
 #include <fstream>
+#include <filesystem>
 
-YamlProfileGateway::YamlProfileGateway(const std::string &profile_dir_path, const std::shared_ptr<ITaskRepository>& task_repo)
-        : profile_dir_path(profile_dir_path), task_repository(task_repo) {
+#include "controller/ConfigYamlKeys.hpp"
 
+YamlProfileGateway::YamlProfileGateway(YAML::Node persistence_config_node, const std::shared_ptr<ITaskRepository>& task_repo)
+        : task_repository(task_repo) {
+
+    if (!persistence_config_node[PERSISTENCE_YAML_RESOURCE_DIR_KEY]) {
+        throw std::runtime_error("Invalid yaml persistence configuration");
+    }
+    profile_dir_path = persistence_config_node["dir"].as<std::string>() + "/profiles";
+    if (!std::filesystem::exists(profile_dir_path)) {
+        std::filesystem::create_directories(profile_dir_path);
+    }
 }
 
-ProfileHandle YamlProfileGateway::loadProfile(std::string name) {
-    std::string file_name = profile_dir_path + "/" + name + "_profile.yaml";
+ProfileHandle YamlProfileGateway::loadProfile(const std::string name) {
+    const std::string file_name = profile_dir_path + "/" + name + ".yaml";
     try {
         YAML::Node profile_node = YAML::LoadFile(file_name);
 
@@ -33,7 +39,7 @@ ProfileHandle YamlProfileGateway::loadProfile(std::string name) {
                 std::string task_name = name_node.as<std::string>();
                 TaskHandle task = task_repository->getTaskByName(task_name);
                 if (task == nullptr) {
-                    fprintf(stderr, "Task %s doesnt exist!", task_name.c_str());
+                    fprintf(stderr, "Task %s doesnt exist!\n", task_name.c_str());
                     continue;
                 }
                 profile->addDoneTask(task, date);
@@ -41,10 +47,8 @@ ProfileHandle YamlProfileGateway::loadProfile(std::string name) {
         }
 
         return profile;
-    } catch (const YAML::BadFile& e) {
-        throw std::runtime_error("Error: Could not open file " + file_name);
-    } catch (const YAML::ParserException& e) {
-        throw std::runtime_error("Error parsing YAML: " + std::string(e.what()));
+    } catch (const std::exception& e) {
+        return nullptr;
     }
 }
 
@@ -55,7 +59,7 @@ ProfileHandle YamlProfileGateway::createProfile(std::string name) {
     profile_node[NAME_KEY] = profile->getName();
     profile_node[DONE_TASKS_KEY] = YAML::Node(YAML::NodeType::Sequence);
 
-    std::ofstream fout(profile_dir_path + "/" + profile->getName() + "_profile.yaml");
+    std::ofstream fout(profile_dir_path + "/" + profile->getName() + ".yaml");
     fout << profile_node;
 
     return profile;

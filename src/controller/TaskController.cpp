@@ -4,13 +4,19 @@
 
 #include "controller/TaskController.hpp"
 
-TaskController::TaskController(const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_gateway) : task_repo(task_repo), profile_gateway(profile_gateway) {
+#include <ranges>
+
+#include "controller/ConfigYamlKeys.hpp"
+
+TaskController::TaskController(const YAML::Node &config_node, const std::shared_ptr<ITaskRepository> &task_repo,
+                               const std::shared_ptr<IProfileGateway> &profile_gateway)
+        : config_node(config_node), task_repo(task_repo), profile_gateway(profile_gateway) {
 }
 
 std::vector<TaskHandle> TaskController::getAvailableTasks() const {
-    ProfileHandle profile = profile_gateway->loadProfile("Oschdi");
-    std::vector done_tasks = profile->getDoneTasksAtDate(Date::createToday());
-    std::vector<TaskHandle> tasks = task_repo->getTasks();
+    const ProfileHandle profile = profile_gateway->loadProfile(config_node[PROFILE_NAME_KEY].as<std::string>());
+    const std::vector done_tasks = profile->getDoneTasksAtDate(Date::createToday());
+    const std::vector<TaskHandle> tasks = task_repo->getTasks();
     std::unordered_map<std::string, TaskHandle> available_task_map{};
 
     for (const auto& task : tasks) {
@@ -25,7 +31,7 @@ std::vector<TaskHandle> TaskController::getAvailableTasks() const {
 
     std::vector<TaskHandle> result;
     result.reserve(available_task_map.size());
-    for (const auto& [key, value] : available_task_map)
+    for (const auto &value: available_task_map | std::views::values)
         result.push_back(value);
     return result;
 }
