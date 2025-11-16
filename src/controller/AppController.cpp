@@ -26,8 +26,8 @@ void AppController::initPersistence() {
         task_repo = std::make_shared<YamlTaskRepository>(config_node[PERSISTENCE_KEY]);
         profile_gateway = std::make_shared<YamlProfileGateway>(config_node[PERSISTENCE_KEY], task_repo);
     } else if (type == "postgres") {
-        task_repo = std::make_shared<PostgresTaskRepository>();
-        profile_gateway = std::make_shared<PostgresProfileGateway>(task_repo);
+        task_repo = std::make_shared<PostgresTaskRepository>(config_node[PERSISTENCE_KEY]);
+        profile_gateway = std::make_shared<PostgresProfileGateway>(config_node[PERSISTENCE_KEY], task_repo);
     } else {
         throw std::runtime_error("Not a valid persistence type");
     }

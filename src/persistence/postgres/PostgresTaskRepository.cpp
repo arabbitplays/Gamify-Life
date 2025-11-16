@@ -4,16 +4,18 @@
 
 #include "persistence/postgres/PostgresTaskRepository.hpp"
 
-PostgresTaskRepository::PostgresTaskRepository() : connection("dbname=gamify-life user=postgres host=/var/run/postgresql")
+#include "persistence/postgres/PostgresConnector.hpp"
+
+PostgresTaskRepository::PostgresTaskRepository(const YAML::Node &config_node) : connection(getPostgresConnection(config_node))
 {
-    if (!connection.is_open()) {
+    if (!connection->is_open()) {
         throw std::runtime_error("Can't connect to postgres db");
     }
 }
 
 void PostgresTaskRepository::addTask(const TaskHandle &task) {
 
-    pqxx::work work(connection);
+    pqxx::work work(*connection);
 
     const std::string sql = R"(
         INSERT INTO public.tasks
@@ -26,7 +28,7 @@ void PostgresTaskRepository::addTask(const TaskHandle &task) {
 }
 
 std::vector<TaskHandle> PostgresTaskRepository::getTasks() {
-    pqxx::work work(connection);
+    pqxx::work work(*connection);
 
     pqxx::result result = work.exec("SELECT name, score, streak_name FROM public.tasks;");
 
@@ -44,7 +46,7 @@ std::vector<TaskHandle> PostgresTaskRepository::getTasks() {
 }
 
 TaskHandle PostgresTaskRepository::getTaskByName(const std::string &name) {
-    pqxx::work work(connection);
+    pqxx::work work(*connection);
 
     const std::string sql = R"(
         SELECT name, score, streak_name

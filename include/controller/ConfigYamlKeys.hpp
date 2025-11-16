@@ -9,4 +9,8 @@ static constexpr std::string PERSISTENCE_TYPE_KEY = "type";
 
 static constexpr std::string PERSISTENCE_YAML_RESOURCE_DIR_KEY = "dir";
 
+static constexpr std::string PERSISTENCE_POSTGRES_DBNAME_KEY = "db_name";
+static constexpr std::string PERSISTENCE_POSTGRES_HOST_KEY = "host";
+static constexpr std::string PERSISTENCE_POSTGRES_USER_KEY = "user";
+
 #endif //CONFIGYAMLKEYS_HPP

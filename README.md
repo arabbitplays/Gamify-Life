@@ -6,3 +6,16 @@ Lightweight TUI application for tracking daily tasks and generating statistics a
 - simple vim-like controls
 
 ![img.png](screenshots/img.png)
+
+## Configuration
+
+### Persistence
+
+- type: the kind of persistence to be used
+- for yaml files the type is "yaml"
+  - dir: directory to store the files in
+- for a local PostgreSQL database the type is "postgres"
+  - host: host of the db
+  - user: db user
+  - db_name: name of the database to use
+  - in the scripts folder is a sql script to create the needed tables

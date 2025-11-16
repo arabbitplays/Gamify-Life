@@ -6,12 +6,15 @@
 
 #include <utility>
 
+#include "controller/ConfigYamlKeys.hpp"
+#include "persistence/postgres/PostgresConnector.hpp"
 
-PostgresProfileGateway::PostgresProfileGateway(const std::shared_ptr<ITaskRepository> &task_repository)
-    : connection("dbname=gamify-life user=postgres host=/var/run/postgresql"),
-    task_repository(task_repository)
+
+PostgresProfileGateway::PostgresProfileGateway(const YAML::Node &config_node, const std::shared_ptr<ITaskRepository> &task_repository)
+    : connection(getPostgresConnection(config_node)), task_repository(task_repository)
 {
-    if (!connection.is_open()) {
+
+    if (!connection->is_open()) {
         throw std::runtime_error("Can't connect to postgres db");
     }
 }
@@ -34,7 +37,7 @@ std::string convertDateToSqlDate(const Date date) {
 
 ProfileHandle PostgresProfileGateway::loadProfile(std::string name) {
     try {
-        pqxx::work work(connection);
+        pqxx::work work(*connection);
 
         std::string sql = R"(
             SELECT id, "name"
@@ -89,7 +92,7 @@ ProfileHandle PostgresProfileGateway::loadProfile(std::string name) {
 
 ProfileHandle PostgresProfileGateway::createProfile(std::string name) {
     try {
-        pqxx::work work(connection);
+        pqxx::work work(*connection);
 
         const std::string sql = R"(
             INSERT INTO public.profiles
@@ -111,7 +114,7 @@ ProfileHandle PostgresProfileGateway::createProfile(std::string name) {
 
 void PostgresProfileGateway::addDoneTaskToProfile(std::string profile_name, Date date, TaskHandle task_handle) {
     try {
-        pqxx::work work(connection);
+        pqxx::work work(*connection);
 
         std::string sql = R"(
             SELECT id

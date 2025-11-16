@@ -6,19 +6,20 @@
 #define POSTGRESPROFILEGATEWAY_HPP
 #include "controller/IProfileGateway.hpp"
 #include <pqxx/pqxx>
+#include "yaml-cpp/yaml.h"
 
 #include "controller/ITaskRepository.hpp"
 
 class PostgresProfileGateway : public IProfileGateway {
 public:
-    explicit PostgresProfileGateway(const std::shared_ptr<ITaskRepository> &task_repository);
+    PostgresProfileGateway(const YAML::Node &config_node, const std::shared_ptr<ITaskRepository> &task_repository);
 
     ProfileHandle loadProfile(std::string name) override;
     ProfileHandle createProfile(std::string name) override;
     void addDoneTaskToProfile(std::string profile_name, Date date, TaskHandle task_handle) override;
 
 public:
-    pqxx::connection connection;
+    std::shared_ptr<pqxx::connection> connection;
 
     std::shared_ptr<ITaskRepository> task_repository;
 };

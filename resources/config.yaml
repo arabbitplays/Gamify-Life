@@ -1,0 +1,6 @@
+profile_name: Jakob
+persistence:
+  type: postgres
+  user: postgres
+  db_name: gamify-life
+  host: /var/run/postgresql
