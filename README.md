@@ -9,6 +9,8 @@ Lightweight TUI application for tracking daily tasks and generating statistics a
 
 ## Configuration
 
+- with the `--config` flag, a path to a .yaml config file can be specified to override the default configuration settings
+
 ### Persistence
 
 - type: the kind of persistence to be used
