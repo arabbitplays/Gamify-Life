@@ -1,19 +1,26 @@
-//
-// Created by oschdi on 11.10.25.
-//
-
 #include "persistence/yaml/YamlProfileGateway.hpp"
 
 #include <fstream>
+#include <filesystem>
 
-YamlProfileGateway::YamlProfileGateway(const std::string &file_path, const std::shared_ptr<ITaskRepository>& task_repo)
-        : file_path(file_path), task_repository(task_repo) {
+#include "controller/ConfigYamlKeys.hpp"
 
+YamlProfileGateway::YamlProfileGateway(YAML::Node persistence_config_node, const std::shared_ptr<ITaskRepository>& task_repo)
+        : task_repository(task_repo) {
+
+    if (!persistence_config_node[PERSISTENCE_YAML_RESOURCE_DIR_KEY]) {
+        throw std::runtime_error("Invalid yaml persistence configuration");
+    }
+    profile_dir_path = persistence_config_node["dir"].as<std::string>() + "/profiles";
+    if (!std::filesystem::exists(profile_dir_path)) {
+        std::filesystem::create_directories(profile_dir_path);
+    }
 }
 
-ProfileHandle YamlProfileGateway::loadProfile(std::string name) {
+ProfileHandle YamlProfileGateway::loadProfile(const std::string name) {
+    const std::string file_name = profile_dir_path + "/" + std::format(PROFILE_FILE_NAME, name);
     try {
-        YAML::Node profile_node = YAML::LoadFile(file_path);
+        YAML::Node profile_node = YAML::LoadFile(file_name);
 
         if (!profile_node[NAME_KEY] || !profile_node[DONE_TASKS_KEY] || !profile_node[DONE_TASKS_KEY].IsSequence()) {
             throw std::runtime_error("File is not a valid profile!");
@@ -29,10 +36,10 @@ ProfileHandle YamlProfileGateway::loadProfile(std::string name) {
 
             auto date = date_node[DATE_KEY].as<Date>();
             for (const auto& name_node : date_node[TASKS_NAMES_KEY]) {
-                std::string task_name = name_node.as<std::string>();
+                auto task_name = name_node.as<std::string>();
                 TaskHandle task = task_repository->getTaskByName(task_name);
                 if (task == nullptr) {
-                    fprintf(stderr, "Task %s doesnt exist!", task_name.c_str());
+                    fprintf(stderr, "Task %s doesnt exist!\n", task_name.c_str());
                     continue;
                 }
                 profile->addDoneTask(task, date);
@@ -40,33 +47,64 @@ ProfileHandle YamlProfileGateway::loadProfile(std::string name) {
         }
 
         return profile;
-    } catch (const YAML::BadFile& e) {
-        throw std::runtime_error("Error: Could not open file" + file_path);
-    } catch (const YAML::ParserException& e) {
-        throw std::runtime_error("Error parsing YAML: " + std::string(e.what()));
+    } catch (const std::exception& e) {
+        return nullptr;
     }
 }
 
-bool YamlProfileGateway::storeProfile(ProfileHandle profile) {
+ProfileHandle YamlProfileGateway::createProfile(std::string name) {
+    auto profile = std::make_shared<Profile>(name);
+
     YAML::Node profile_node;
     profile_node[NAME_KEY] = profile->getName();
     profile_node[DONE_TASKS_KEY] = YAML::Node(YAML::NodeType::Sequence);
 
-    std::unordered_map<Date, std::vector<TaskHandle>> done_tasks = profile->getDoneTasks();
-    for (const auto& [date, task_list] : done_tasks) {
-        YAML::Node date_node;
-        date_node[DATE_KEY] = date;
-        date_node[TASKS_NAMES_KEY] = YAML::Node(YAML::NodeType::Sequence);
-
-        for (const auto& task : task_list) {
-            date_node[TASKS_NAMES_KEY].push_back(task->getName());
-        }
-
-        profile_node[DONE_TASKS_KEY].push_back(date_node);
-    }
-
-    std::ofstream fout(file_path);
+    std::ofstream fout(profile_dir_path + "/" + std::format(PROFILE_FILE_NAME, name));
     fout << profile_node;
 
-    return true;
+    return profile;
+}
+
+void YamlProfileGateway::addDoneTaskToProfile(std::string profile_name, Date insert_date, TaskHandle task) {
+    std::string file_path = profile_dir_path + "/" + std::format(PROFILE_FILE_NAME, profile_name);
+    try {
+        YAML::Node profile_node = YAML::LoadFile(file_path);
+
+        if (!profile_node[NAME_KEY] || !profile_node[DONE_TASKS_KEY] || !profile_node[DONE_TASKS_KEY].IsSequence()) {
+            throw std::runtime_error("File is not a valid profile!");
+        }
+
+        bool found_date = false;
+
+        for (const auto& date_node_iterator : profile_node[DONE_TASKS_KEY]) {
+            YAML::Node date_node = date_node_iterator;
+            if (!date_node[DATE_KEY] || !date_node[TASKS_NAMES_KEY] || !date_node[TASKS_NAMES_KEY].IsSequence()) {
+                fprintf(stderr, "Date node is not valid!");
+                continue;
+            }
+
+            auto date = date_node[DATE_KEY].as<Date>();
+            if (insert_date == date) {
+                found_date = true;
+                date_node[TASKS_NAMES_KEY].push_back(task->getName());
+                break;
+            }
+        }
+
+        if (!found_date) {
+            YAML::Node date_node;
+            date_node[DATE_KEY] = insert_date;
+            date_node[TASKS_NAMES_KEY] = YAML::Node(YAML::NodeType::Sequence);
+            date_node[TASKS_NAMES_KEY].push_back(task->getName());
+
+            profile_node[DONE_TASKS_KEY].push_back(date_node);
+        }
+
+        std::ofstream fout(file_path);
+        fout << profile_node;
+    } catch (const YAML::BadFile& e) {
+        throw std::runtime_error("Error: Could not open file " + file_path);
+    } catch (const YAML::ParserException& e) {
+        throw std::runtime_error("Error parsing YAML: " + std::string(e.what()));
+    }
 }

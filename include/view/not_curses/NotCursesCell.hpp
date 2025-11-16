@@ -19,9 +19,9 @@ enum Color {
     GOLD = 3,
     ACTIVE = 1,
     PROFILE_WINDOW = 53,
-    TASK_WINDOW = 54,
-    STREAK_WINDOW = 56,
-    STATS_WINDOW = 55,
+    TASK_WINDOW = 17,
+    STREAK_WINDOW = 52,
+    STATS_WINDOW = 58,
 };
 
 class NotCursesCell;

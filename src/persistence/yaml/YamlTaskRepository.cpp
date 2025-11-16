@@ -6,8 +6,15 @@
 
 #include <fstream>
 
-YamlTaskRepository::YamlTaskRepository(const std::string &file_path) : file_path(file_path) {
+#include "controller/ConfigYamlKeys.hpp"
 
+YamlTaskRepository::YamlTaskRepository(YAML::Node persistence_config_node) {
+    if (!persistence_config_node[PERSISTENCE_YAML_RESOURCE_DIR_KEY]) {
+        throw std::runtime_error("Invalid yaml persistence configuration");
+    }
+
+    file_path = persistence_config_node[PERSISTENCE_YAML_RESOURCE_DIR_KEY].as<std::string>() + "/tasks.yaml";
+    loadTasks();
 }
 
 void YamlTaskRepository::loadTasks() {

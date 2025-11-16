@@ -12,7 +12,9 @@ public:
     InMemoryProfileGateway() = default;
 
     ProfileHandle loadProfile(std::string name) override;
-    bool storeProfile(ProfileHandle) override;
+    ProfileHandle createProfile(std::string name) override;
+    void addDoneTaskToProfile(std::string profile_name, Date date, TaskHandle task_handle) override;
+
 
 private:
     ProfileHandle profile;

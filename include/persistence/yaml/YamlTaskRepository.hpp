@@ -7,7 +7,7 @@
 #include "controller/ITaskRepository.hpp"
 #include <yaml-cpp/yaml.h>
 
-class YamlTaskRepository : public ITaskRepository {
+class YamlTaskRepository final : public ITaskRepository {
 private:
     static constexpr std::string TASK_LIST_KEY = "tasks";
     static constexpr std::string NAME_KEY = "name";
@@ -15,9 +15,9 @@ private:
     static constexpr std::string STREAK_KEY = "streak";
 
 public:
-    explicit YamlTaskRepository(const std::string &file_path);
+    explicit YamlTaskRepository(YAML::Node persistence_config_node);
 
-    void loadTasks() override;
+    void loadTasks();
     void addTask(const TaskHandle& task) override;
     std::vector<TaskHandle> getTasks() override;
     TaskHandle getTaskByName(const std::string &task_name) override;

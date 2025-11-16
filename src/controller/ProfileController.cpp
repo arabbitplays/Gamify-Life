@@ -1,18 +1,29 @@
-//
-// Created by oschdi on 09.10.25.
-//
-
 #include "../../include/controller/ProfileController.hpp"
+
+#include "controller/ConfigYamlKeys.hpp"
 #include "persistence/StreakFactory.hpp"
 
-ProfileController::ProfileController(const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_gateway)
+ProfileController::ProfileController(YAML::Node config_node, const std::shared_ptr<ITaskRepository> &task_repo, const std::shared_ptr<IProfileGateway>& profile_gateway)
         : task_repo(task_repo), profile_gateway(profile_gateway) {
 
-    loadProfile("Oschdi");
+    if (!config_node[PROFILE_NAME_KEY]) {
+        throw std::runtime_error("Profile name missing in config");
+    }
+    loadProfile(config_node[PROFILE_NAME_KEY].as<std::string>());
+}
+
+ProfileHandle ProfileController::getProfile() {
+    return profile;
 }
 
 void ProfileController::loadProfile(const std::string &name) {
     profile = profile_gateway->loadProfile(name);
+    if (profile == nullptr) {
+        profile = profile_gateway->createProfile(name);
+        if (profile == nullptr) {
+            throw std::runtime_error("Profile '" + name + "' could not be loaded");
+        }
+    }
     profile->addStreaks(StreakFactory::createStreaksForProfile(profile));
 }
 
@@ -29,7 +40,7 @@ void ProfileController::addDoneTaskToday(const std::string& task_name) const {
     }
 
     profile->addDoneTaskToday(task);
-    profile_gateway->storeProfile(profile);
+    profile_gateway->addDoneTaskToProfile(profile->getName(), Date::createToday(), task);
 }
 
 float ProfileController::getTotalScoreAtDate(const Date &date) const {
