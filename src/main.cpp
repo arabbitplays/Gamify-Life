@@ -7,7 +7,7 @@
 #include "view/not_curses/NotCursesFrontend.hpp"
 
 int main(int argc, char *argv[]) {
-    std::string config_path = "../resources/default_config.yaml";
+    std::string config_path = "resources/default_config.yaml";
     if (argc == 3 && std::string(argv[1]) == "--config") {
         config_path = argv[2];
     }

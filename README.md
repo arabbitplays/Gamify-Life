@@ -1,21 +1,54 @@
 # Gamify Life
 
-Lightweight TUI application for tracking daily tasks and generating statistics and streaks for the done tasks.
-- supports custom tasks and streaks
-- allows for syncing over a PostgreSQL database
-- simple vim-like controls
+A lightweight, Notcurses-based TUI application for tracking daily tasks, viewing statistics, and maintaining streaks.
+
+- Supports custom tasks and streak definitions
+- Optional syncing via PostgreSQL
+- Simple, Vim-like keybindings
 
 ![img.png](screenshots/img.png)
 
+## Requirements & Building
+
+### Dependencies 
+- `yaml-cpp`
+- `libpqxx`
+- `glm`
+- `notcurses`
+
+### Build Requirements
+- Meson 
+- Python3
+- A recent C++ compiler
+- (Optional) A Nix flake is provided for building inside a Nix shell
+
+```bash
+# Setup build directory
+meson setup build
+
+# Compile
+meson compile -C build
+
+# Run
+./build/GamfiyLife
+```
+
 ## Configuration
 
-### Persistence
+### Profile
 
-- type: the kind of persistence to be used
-- for yaml files the type is "yaml"
-  - dir: directory to store the files in
-- for a local PostgreSQL database the type is "postgres"
-  - host: host of the db
-  - user: db user
-  - db_name: name of the database to use
-  - in the scripts folder is a sql script to create the needed tables
+- `profile_name`: The profile to use.
+  - If it does not exist, it will be created automatically.
+
+### Persistence Options
+
+#### YAML File Storage
+- `type`: `"yaml"`
+- `dir`: Directory for storing YAML files
+
+#### PostgreSQL Storage
+- `type`: `"postgres"`
+- `host`: Database host
+- `user`: Database user
+- `db_name`: Database name
+- A SQL script for creating the necessary tables is included in the `scripts/` directory.
